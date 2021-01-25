@@ -14,4 +14,4 @@ DriveBuddy makes the whole process much easier for license candidates to choose 
 The copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 
-MIT © [COMP231-DriveBuddy]()
+MIT © [DriveBuddy-Comp231]()
