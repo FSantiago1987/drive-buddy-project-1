@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { registerUser } from "../../actions/authActions";
@@ -200,7 +199,7 @@ class RegisterForm extends Component {
             />     
         </FormContainer>
         <Marginer direction="vertical" margin={10} />
-        <SubmitButton type="submit">Sign-up</SubmitButton>
+        <SubmitButton type="submit" onClick={this.onSubmit}>Sign-up</SubmitButton>
         <Marginer direction="vertical" margin="1em" />
         <MutedLink href="#">Already have an account? <BoldLink href="/customer/access/signin">Sign-in</BoldLink></MutedLink>
     </BoxContainer>
@@ -216,7 +215,7 @@ RegisterForm.propTypes = {
     auth: state.auth,
     errors: state.errors
   });
-  export default connect(
+  export default withRouter(connect(
     mapStateToProps,
     { registerUser }
-  )(withRouter(RegisterForm));
+  )(RegisterForm));
