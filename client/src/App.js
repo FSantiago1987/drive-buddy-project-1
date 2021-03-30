@@ -13,6 +13,8 @@ import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import Dashboard from "./components/dashboard/Dashboard";
+import {Homepage} from "./containers/HomePage";
+import { CustomerAccessPage } from './containers/CustomerAccessPage';
 
 // Pull test
 
@@ -39,17 +41,17 @@ if (localStorage.jwtToken) {
 function App() {
   return (
     <Provider store={store}>
-        <Router>
           <div className="App">
-            <Navbar />
-            <Route exact path="/" component={Landing} />
-            <Route exact path="/register" component={Register} />
-            <Route exact path="/login" component={Login} />
-            <Switch>
-              <PrivateRoute exact path="/dashboard" component={Dashboard} />
-            </Switch>
+          <Router>
+              <Switch>
+                <Route exact path="/" component={Homepage} />
+                <Route path="/customer/access/:action" exact component={CustomerAccessPage} />
+                {/* <Route exact path="/register" component={Register} />
+                <Route exact path="/login" component={Login} /> */}
+                <PrivateRoute exact path="/dashboard" component={Dashboard} />
+              </Switch>
+            </Router>
           </div>
-        </Router>
       </Provider>
   );
 }
