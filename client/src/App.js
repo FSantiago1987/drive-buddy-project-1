@@ -45,8 +45,8 @@ function App() {
               <Switch>
                 <Route exact path="/" component={Homepage} />
                 <Route path="/customer/access/:action" exact component={CustomerAccessPage} />
-                <Route exact path="/register" component={Register} />
-                <Route exact path="/login" component={Login} />
+                {/* <Route exact path="/register" component={Register} />
+                <Route exact path="/login" component={Login} /> */}
                 <PrivateRoute exact path="/dashboard" component={Dashboard} />
               </Switch>
             </Router>

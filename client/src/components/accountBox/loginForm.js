@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { loginUser } from "../../actions/authActions";
@@ -45,10 +45,11 @@ class LoginForm extends Component {
     this.props.loginUser(userData); // since we handle the redirect within our component, we don't need to pass in this.props.history as a parameter
       };   
     render(){
+      console.log(this.props)
         const { errors } = this.state;
         return (
             <BoxContainer>
-                <FormContainer noValidate onSubmit={this.onSubmit}>
+                <FormContainer noValidate>
                     <Input 
                         onChange={this.onChange}
                         value={this.state.email}
@@ -75,7 +76,7 @@ class LoginForm extends Component {
                 <Marginer direction="vertical" margin={10} />
                 <MutedLink href="#">Forget your password?</MutedLink>
                 <Marginer direction="vertical" margin="1.6em" />
-                <SubmitButton type="submit">Sign-in</SubmitButton>
+                <SubmitButton type="submit" onClick={this.onSubmit}>Sign-in</SubmitButton>
                 <Marginer direction="vertical" margin="1em" />
                 <MutedLink href="#">Don't have an account? <BoldLink href="/customer/access/signup">Sign-up</BoldLink></MutedLink>
             </BoxContainer>
@@ -93,7 +94,7 @@ LoginForm.propTypes = {
     auth: state.auth,
     errors: state.errors
   });
-  export default connect(
+  export default withRouter(connect(
     mapStateToProps,
     { loginUser }
-  )(LoginForm);
+  )(LoginForm));
