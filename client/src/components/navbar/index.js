@@ -28,7 +28,7 @@ const AccessibilityContainer = styled.div`
     align-items: center;
 `;
 
-const AchorLink = styled(Link)`
+const AchorLink = styled.a`
     font-size: 12px;
     color: #fff;
     text-decoration: none;
@@ -69,11 +69,11 @@ export function Navbar(props){
                 <Separator />
             )}       
             <Marginer direction="horizontal" margin={10} />
-            <Link to="/customer/access/signup">
+            <AchorLink href="/customer/access/signup" initialActive='signup'>
                 <Button size={11}>Register</Button>
-            </Link>
+            </AchorLink>
             <Marginer direction="horizontal" margin={8} />
-            <AchorLink to="/customer/access/signin">Login</AchorLink>
+            <AchorLink href="/customer/access/signin" initialActive='signin'>Login</AchorLink>
         </AccessibilityContainer>
     </NavbarContainer>
 }

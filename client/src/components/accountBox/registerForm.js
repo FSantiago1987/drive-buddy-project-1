@@ -63,7 +63,7 @@ class RegisterForm extends Component {
     render() {
         const { errors } = this.state;
     return <BoxContainer>
-        <FormContainer>
+        <FormContainer noValidate onSubmit={this.onSubmit}>
             <Input 
                   onChange={this.onChange}
                   value={this.state.first_name}
@@ -197,11 +197,11 @@ class RegisterForm extends Component {
                     invalid: errors.user_type
                   })}
             />     
-        </FormContainer>
         <Marginer direction="vertical" margin={10} />
-        <SubmitButton type="submit" onClick={this.onSubmit}>Sign-up</SubmitButton>
+        <SubmitButton type="submit">Sign-up</SubmitButton>
         <Marginer direction="vertical" margin="1em" />
         <MutedLink href="#">Already have an account? <BoldLink href="/customer/access/signin">Sign-in</BoldLink></MutedLink>
+        </FormContainer>
     </BoxContainer>
     }
 }
