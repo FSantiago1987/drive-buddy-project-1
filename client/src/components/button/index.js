@@ -9,7 +9,7 @@ const ButtonWrapper = styled.button`
     font-size: ${({ size }) => size ? size + "px" : "17px"};
     font-weight: 600;
     border-radius: 3px;
-    background-color: #2a9d8f;
+    background-color: ${({ color }) => color ? color : "#2a9d8f"};
     cursor: pointer;
     transition: all 200ms ease-in-out;
 
@@ -23,8 +23,8 @@ const ButtonWrapper = styled.button`
 `;
 
 export function Button(props) {
-    const { size } = props;
-    return <ButtonWrapper size={size} className={props.className}>
+    const { size, color } = props;
+    return <ButtonWrapper size={size} className={props.className} color={color}>
         {props.children}
     </ButtonWrapper>
 }

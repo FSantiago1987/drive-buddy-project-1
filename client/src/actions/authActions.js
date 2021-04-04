@@ -10,7 +10,7 @@ import {
 export const registerUser = (userData, history) => dispatch => {
   axios
     .post("/api/users/register", userData)
-    .then(res => history.push("/login")) // re-direct to login on successful register
+    .then(res => history.push("/")) // re-direct to home on successful register
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
@@ -22,7 +22,7 @@ export const registerUser = (userData, history) => dispatch => {
 export const loginUser = userData => dispatch => {
   axios
     .post("/api/users/login", userData)
-    .then(res => {
+    .then(res =>  {
       // Save to localStorage
 // Set token to localStorage
       const { token } = res.data;

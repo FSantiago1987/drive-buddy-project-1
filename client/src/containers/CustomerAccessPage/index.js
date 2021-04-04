@@ -1,10 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useParams } from 'react-router-dom'
-import styled from 'styled-components'
 import { AccountBox } from '../../components/accountBox'
 import { Footer } from '../../components/footer'
-import { Marginer } from '../../components/marginer'
-import { Navbar } from '../../components/navbar'
+import Navbar  from '../../components/navbar'
 import { InnerPageContainer, PageContainer } from '../../components/pageContainer'
 
 

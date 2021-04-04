@@ -10,7 +10,7 @@ import PrivateRoute from "./components/private-route/PrivateRoute";
 import Dashboard from "./components/dashboard/Dashboard";
 import {Homepage} from "./containers/HomePage";
 import { CustomerAccessPage } from './containers/CustomerAccessPage';
-import { Profile } from './containers/ProfilePage';
+import Profile  from './containers/ProfilePage';
 
 // Pull test
 
@@ -42,10 +42,9 @@ function App() {
               <Switch>
                 <Route exact path="/" component={Homepage} />
                 <Route path="/customer/access/:action" exact component={CustomerAccessPage} />
-                <Route path="/profile" exact component={Profile} />
+                <PrivateRoute path="/profile" exact component={Profile} />
                 {/* <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} /> */}
-                <PrivateRoute exact path="/dashboard" component={Dashboard} />
               </Switch>
             </Router>
           </div>
