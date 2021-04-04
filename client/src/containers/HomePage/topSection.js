@@ -84,6 +84,12 @@ const SloganText = styled.h3`
     }
 `;
 
+const AchorLink = styled.a`
+    text-decoration: none;
+    outline: none;
+    transition: all 200ms ease-in-out;
+`;
+
 
 export function TopSection(props){
     const { children } = props;
@@ -100,7 +106,9 @@ export function TopSection(props){
                     <SloganText>Find the right driving instructor</SloganText>
                     <SloganText>And get your Driving License</SloganText>
                     <Marginer direction="vertical" margin={20} />
-                    <Button>Join Now</Button>
+                    <AchorLink href="/customer/access/signup">
+                        <Button>Join Now</Button>
+                    </AchorLink>
                 </LogoContainer>
                 {!isMobile && (
                     <StandoutImg>

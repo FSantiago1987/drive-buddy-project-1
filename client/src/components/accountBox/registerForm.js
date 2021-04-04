@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import Select from "react-select";
 import { registerUser } from "../../actions/authActions";
 import classnames from "classnames";
 import { withRouter } from 'react-router-dom';
 import { Marginer } from '../marginer'
-import { BoldLink, BoxContainer, FormContainer, Input, MutedLink, SubmitButton } from './common'
+import { BoldLink, BoxContainer, FormContainer, Input, MutedLink, SelectStyled, SubmitButton } from './common'
 
 class RegisterForm extends Component {
     constructor() {
@@ -62,6 +63,10 @@ class RegisterForm extends Component {
       };
     render() {
         const { errors } = this.state;
+        const options = [
+          { value: 'License Applicant', label: 'License Applicant' },
+          { value: 'Instructor Applicant', label: 'Instructor Applicant' }
+        ]
     return <BoxContainer>
         <FormContainer noValidate onSubmit={this.onSubmit}>
             <Input 
@@ -186,18 +191,18 @@ class RegisterForm extends Component {
                     invalid: errors.post_code
                   })}
             /> 
-            <Input 
-                  onChange={this.onChange}
-                  value={this.state.user_type}
+            <Select 
                   error={errors.user_type}
                   id="user_type"
                   type="text"
                   placeholder="User Type" 
+                  clearable={false}
+                  options={options}
                   className={classnames("", {
                     invalid: errors.user_type
                   })}
-            />     
-        <Marginer direction="vertical" margin={10} />
+             /> 
+        <Marginer direction="vertical" margin={20} />
         <SubmitButton type="submit">Sign-up</SubmitButton>
         <Marginer direction="vertical" margin="1em" />
         <MutedLink href="#">Already have an account? <BoldLink href="/customer/access/signin">Sign-in</BoldLink></MutedLink>

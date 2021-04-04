@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Select from "react-select";
 
 export const BoxContainer = styled.div`
     width: 100%;
@@ -52,6 +53,19 @@ export const Input = styled.input`
     &:focus{
         outline: none;
         border-bottom: 2px solid rgb(0,212,255);
+    }
+`;
+
+export const SelectStyled = styled(Select)`
+    width: 100%;
+    height: 30px!important;
+    outline: none;
+    padding: 0px 0px;
+    transition: all 200ms ease-in-out;
+    font-size: 12px;
+
+    &::placeholder{
+        color: rgba(200, 200, 200, 1);
     }
 `;
 
