@@ -11,9 +11,9 @@ import FormProfile  from '../../components/profileForm';
 
 const TopSectionContainer = styled.div`
     width: 100%;
-    height: 800px;
+    height: 820px;
     background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%,rgba(0,0,0,0.3) 100%), url(${TopProfileBackgroundImg}) no-repeat;
-    background-position: 0px -50px;
+    background-position: 0px 0px;
     background-size: cover;
     
 

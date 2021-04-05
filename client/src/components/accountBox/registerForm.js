@@ -6,7 +6,7 @@ import { registerUser } from "../../actions/authActions";
 import classnames from "classnames";
 import { withRouter } from 'react-router-dom';
 import { Marginer } from '../marginer'
-import { BoldLink, BoxContainer, FormContainer, Input, MutedLink, SelectStyled, SubmitButton } from './common'
+import { BoldLink, BoxContainer, FormContainer, Input, MutedLink, SubmitButton } from './common'
 
 class RegisterForm extends Component {
     constructor() {
@@ -36,7 +36,7 @@ class RegisterForm extends Component {
       componentDidMount() {
         // If logged in and user navigates to Register page, should redirect them to dashboard
         if (this.props.auth.isAuthenticated) {
-          this.props.history.push("/dashboard");
+          this.props.history.push("/profile");
         }
       }
       componentWillReceiveProps(nextProps) {
@@ -255,7 +255,6 @@ class RegisterForm extends Component {
               className={classnames("", {
                 invalid: errors.dateOfBirth
               })}
-              onChange={this.onChange}
             />,
             <Input 
               onChange={this.onChange}

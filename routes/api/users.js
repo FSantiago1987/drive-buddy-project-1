@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const keys = require("../../config/keys");
+const multer = require("multer");
 // Load input validation
 const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
@@ -141,5 +142,12 @@ router.post("/login", (req, res) => {
       });
     });
   });
+
+  // @route POST api/users/upload
+  const upload = multer();
+  router.post("/upload", upload.single("image"), function(req, res){
+    console.log(req.file);
+    console.log("File Uploaded");
+  })
 
   module.exports = router;
