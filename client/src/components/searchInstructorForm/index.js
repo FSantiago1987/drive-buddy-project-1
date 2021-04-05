@@ -6,8 +6,8 @@ import Checkbox from "react-custom-checkbox";
 import * as Icon from "react-icons/fi";
 import Barney from "../../images/Barney.jpg";
 import React, { Component } from "react";
-
-import { Dropdown } from 'semantic-ui-react'
+import Select from "react-select";
+import classnames from "classnames";
 
 const BoxContainer = styled.div`
   width: 100%;
@@ -184,22 +184,15 @@ function UserList() {
   );
 }
 
-function DropDownList(optName, options) {
-  // console.log('aaaaaaaaaaaa' + optName)
-  // console.log('aaaaaaaaaaaa' + options)
-  const list = options.map(opt => (<option value={opt}>{opt}</option>));
-  return (
-    <Dropdown placeholder={optName} search selection options={list} />
-  );
-}
-
 class FormSearchInstructor extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: "coconut",
       name: "",
-      date: "",
+      gender: "",
+      language: "",
+      rate: "",
+      errors: {}
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -216,6 +209,7 @@ class FormSearchInstructor extends Component {
   }
 
   render() {
+    const { errors } = this.state;
     return (
       <div>
         <BoxContainer>
@@ -232,17 +226,64 @@ class FormSearchInstructor extends Component {
             <Marginer direction="horizontal" margin="8em" />
             <ContentContainer>
               <Label>Gender</Label>
-              {DropDownList("gender", ["Female", "Male", "Other"])}
+              <Select 
+                  onChange={(e)=>{this.setState({rate: e.value})}}
+                  error={errors.gender}
+                  id="gender"
+                  type="text"
+                  placeholder="Gender" 
+                  clearable={false}
+                  options={[
+                    { value: 'Male', label: 'Male' },
+                    { value: 'Female', label: 'Female' },
+                    { value: 'Other', label: 'Other' },
+                  ]}
+                  className={classnames("", {
+                    invalid: errors.gender
+                  })}
+             />
             </ContentContainer>
             <Marginer direction="horizontal" margin="8em" />
             <ContentContainer>
               <Label>Language</Label>
-              {DropDownList("gender", ["Female", "Male", "Other"])}
+              <Select 
+                  onChange={(e)=>{this.setState({rate: e.value})}}
+                  error={errors.language}
+                  id="language"
+                  type="text"
+                  placeholder="Language" 
+                  clearable={false}
+                  options={[
+                    { value: '1', label: 'English' },
+                    { value: '2', label: 'French' },
+                    { value: '3', label: 'Spanish' },
+                  ]}
+                  className={classnames("", {
+                    invalid: errors.language
+                  })}
+             />
             </ContentContainer>
             <Marginer direction="horizontal" margin="8em" />
             <ContentContainer>
               <Label>Rate</Label>
-              {DropDownList("gender", ["Female", "Male", "Other"])}
+              <Select 
+                  onChange={(e)=>{this.setState({rate: e.value})}}
+                  error={errors.rate}
+                  id="rate"
+                  type="text"
+                  placeholder="Rate" 
+                  clearable={false}
+                  options={[
+                    { value: '1', label: '1' },
+                    { value: '2', label: '2' },
+                    { value: '3', label: '3' },
+                    { value: '4', label: '4' },
+                    { value: '5', label: '5' }
+                  ]}
+                  className={classnames("", {
+                    invalid: errors.rate
+                  })}
+             />
             </ContentContainer>
             <Marginer direction="horizontal" margin="8em" />
             <ContentContainer>
