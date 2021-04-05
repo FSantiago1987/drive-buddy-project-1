@@ -11,6 +11,8 @@ import Dashboard from "./components/dashboard/Dashboard";
 import {Homepage} from "./containers/HomePage";
 import { CustomerAccessPage } from './containers/CustomerAccessPage';
 import Profile  from './containers/ProfilePage';
+import SearchInstructor from './containers/SearchInstructor';
+import RateInstructor from './containers/RateInstructor';
 
 // Pull test
 
@@ -33,7 +35,6 @@ if (localStorage.jwtToken) {
   }
 }
 
-
 function App() {
   return (
     <Provider store={store}>
@@ -43,6 +44,8 @@ function App() {
                 <Route exact path="/" component={Homepage} />
                 <Route path="/customer/access/:action" exact component={CustomerAccessPage} />
                 <PrivateRoute path="/profile" exact component={Profile} />
+                <PrivateRoute path="/search_instructor" exact component={SearchInstructor} />
+                <PrivateRoute path="/rate_instructor" exact component={RateInstructor} />
                 {/* <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} /> */}
               </Switch>
