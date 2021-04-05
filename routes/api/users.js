@@ -8,7 +8,37 @@ const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
 // Load User model
 const User = require("../../models/User");
-
+router.put("/update", (req,res) => {
+  let id = req.body._id;
+  let payload = req.body;
+  delete payload._id;
+  User.findByIdAndUpdate({_id: id}, payload, function(err, result){
+    if(err){
+      res.send(err)
+    }
+    else{
+      User.findOne({ _id: result._id }).then(user => {
+        if (user) {
+          return res.send(user);
+        }
+      });
+        
+    }
+  })
+});
+router.post("/delete", (req,res) => {
+  let id = req.body._id;
+  let payload = req.body;
+  delete payload._id;
+  User.findByIdAndDelete({_id: id}, payload, function(err, result){
+    if(err){
+      res.send(err)
+    }
+    else{
+      return res.send(result);
+    }
+  })
+});
 // @route POST api/users/register
 // @desc Register user
 // @access Public
@@ -28,6 +58,9 @@ router.post("/register", (req, res) => {
             last_name: req.body.last_name,
             username: req.body.username,
             email: req.body.email,
+            dateOfBirth: req.body.dateOfBirth,
+            profilePicture: "https://www.vippng.com/png/detail/363-3631798_profile-placeholder-woman-720-profile-image-placeholder-png.png",
+            messages: [],
             password: req.body.password,
             phone: req.body.phone,
             address: req.body.address,
@@ -38,7 +71,10 @@ router.post("/register", (req, res) => {
         };
         if(req.body.user_type == 'instructor'){
             parameters.feedback = [];
-            parameters.service_description = 'I offer...';
+            parameters.languages = req.body.languages || [];
+            parameters.documents = req.body.documents || [];
+            parameters.gender = req.body.gender || "Rather not say";
+            parameters.service_description = req.body.service_description || "I offer...";
         }
         const newUser = new User(parameters);
   // Hash password before saving in database

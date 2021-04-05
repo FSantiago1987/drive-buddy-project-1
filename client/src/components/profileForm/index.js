@@ -1,8 +1,11 @@
 import styled from "styled-components";
 import { Marginer } from "../marginer";
 import { deviceSize } from "../responsive";
+import { updateUser, deleteUser, logoutUser } from "../../actions/authActions";
 // from https://www.npmjs.com/package/react-custom-checkbox
+import { withRouter } from 'react-router-dom';
 import Checkbox from "react-custom-checkbox";
+import { connect } from "react-redux";
 import * as Icon from "react-icons/fi";
 import Barney from "../../images/Barney.jpg";
 import { Component } from "react";
@@ -122,19 +125,36 @@ const ContentContainer = styled.div`
 class FormProfile extends Component {
   constructor(props) {
     super(props);
+    this.userData = JSON.parse(localStorage.userData);
+    const { 
+      first_name = "", 
+      last_name = "",
+      email = "",
+      dateOfBirth = "",
+      user_type = "",
+      password = "",
+      profilePicture = "",
+      gender = "",
+      messages = [],
+      languages = [],
+      documents = []
+    } = this.userData;
     this.state = {
-      name: "",
-      email: "",
-      dateOfBirth: "",
+      first_name: first_name,
+      last_name: last_name,
+      email: email,
+      dateOfBirth: dateOfBirth,
       password: "",
-      profilePicture: "",
-      profileRole: "",
-      gender: "",
-      messages: [],
-      languages: [],
-      documents: [],
+      profilePicture: profilePicture,
+      profileRole: user_type,
+      gender: gender,
+      messages: messages,
+      languages: languages,
+      documents: documents,
     };
+    console.log(this.userData);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
@@ -143,24 +163,43 @@ class FormProfile extends Component {
   }
 
   handleSubmit(evt) {
-    evt.preventDefault();
-    const updatedUser = {...this.state};
-    this.props.updateUser(updatedUser);
+    const updatedUser = {
+      _id: this.userData._id,
+      first_name: this.state.first_name,
+      last_name: this.state.last_name,
+      email: this.state.email,
+      dateOfBirth: this.state.dateOfBirth,
+      // password: "",
+      profilePicture: this.state.profilePicture,
+    };
+    if(this.state.profileRole === "instructor"){
+      Object.assign(updateUser, {messages: this.state.messages, languages: this.state.languages, documents: this.state.documents,})
+    }
+    this.props.updateUser(updatedUser, this.props.history); 
   }
 
   handleDelete(evt) {
-    evt.preventDefault();
+    this.props.deleteUser({_id:this.userData._id}, this.props.history);
+    this.props.logoutUser(); 
   }
   render() {
     return (
       <BoxContainer>
-        <FormContainer onclick={this.handleSubmit}>
+        <FormContainer>
           <ContentContainer>
-            <LabelProfile>Your Name</LabelProfile>
+            <LabelProfile>First Name</LabelProfile>
             <Input
-              name="name"
-              id="name"
-              value={this.state.name !== "" ? this.state.name : "Barney Stinson" }
+              name="first_name"
+              id="first_name"
+              value={this.state.first_name !== "" ? this.state.first_name : "Barney" }
+              onChange={this.handleChange}
+            />
+            <Marginer direction="vertical" margin="2em" />
+            <LabelProfile>Last Name</LabelProfile>
+            <Input
+              name="last_name"
+              id="last_name"
+              value={this.state.last_name !== "" ? this.state.last_name : "Stinson" }
               onChange={this.handleChange}
             />
             <Marginer direction="vertical" margin="2em" />
@@ -184,7 +223,7 @@ class FormProfile extends Component {
               placeholder={
                 this.state.email !== ""
                   ? this.state.email
-                  : "awesome@legendary.com"
+                  : "example@email.com"
               }
               type="text"
               onChange={this.handleChange}
@@ -247,17 +286,13 @@ class FormProfile extends Component {
             <LabelProfile>Date of birth</LabelProfile>
             <Input
               type="date"
-              value={
-                this.state.profilePicture !== ""
-                  ? this.state.profilePicture
-                  : "1975-07-23"
-              }
+              value={this.state.dateOfBirth}
               onChange={this.handleChange}
             />
             <Marginer direction="vertical" margin="2em" />
             <LabelProfile>Gender</LabelProfile>
             <LabelResponseProfile>
-              ✔ {this.state.gender !== "" ? this.state.gender : "Male"}
+              ✔ {this.state.gender !== "" ? this.state.gender : "Rather not say"}
             </LabelResponseProfile>
             <Marginer direction="vertical" margin="2em" />
             <LabelProfile>Instructors documents</LabelProfile>
@@ -312,13 +347,21 @@ class FormProfile extends Component {
             <LabelProfile>Confirm your password</LabelProfile>
             <Input placeholder="*******" type="password" />
             <Marginer direction="vertical" margin="2.5em" />
-            <SubmitButton>Update Profile</SubmitButton>
+            <SubmitButton type="button" onClick={this.handleSubmit}>Update Profile</SubmitButton>
             <Marginer direction="vertical" margin="2em" />
-            <DeleteButton onclick={this.handleDelete}>Delete Profile</DeleteButton>
+            <DeleteButton type="button" onClick={this.handleDelete}>Delete Profile</DeleteButton>
           </ContentContainer>
         </FormContainer>
+        
       </BoxContainer>
     );
   }
 }
-export default FormProfile;
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors
+});
+export default withRouter(connect(
+  mapStateToProps,
+  { updateUser, deleteUser, logoutUser }
+)(FormProfile));

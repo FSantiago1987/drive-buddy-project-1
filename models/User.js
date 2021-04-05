@@ -22,6 +22,18 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
+  dateOfBirth:{
+    type: String,
+    required: true
+  },
+  profilePicture: {
+    type: String,
+    required: false
+  },
+  messages: {
+    type: Array,
+    required: false
+  },
   phone: {
     type: String,
     required: true
@@ -46,9 +58,21 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
+  gender: {
+    type: String,
+    required: false
+  },  
   feedback: {
       type: Array,
       required: false
+  },
+  languages: {
+    type: Array,
+    required: false
+  },
+  documents: {
+    type: Array,
+    required: false
   },
   service_description: {
     type: String,
