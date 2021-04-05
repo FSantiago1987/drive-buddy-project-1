@@ -63,12 +63,10 @@ export function Instructors(props){
 
     const FetchInstructors = async () => {
         setLoading(true);
-        const response = await axios.get("http://localhost:9000/instructors").catch((err) => {
+        const response = await axios.get("/api/users/instructors").catch((err) => {
             console.log("Error: ", err);
         });
-
-
-        if(response) {
+        if(response.data) {
             setMostUsedInstructors(response.data);
         }
 

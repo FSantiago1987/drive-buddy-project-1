@@ -27,7 +27,7 @@ const UserSchema = new Schema({
     required: true
   },
   profilePicture: {
-    type: String,
+    type: Schema.Types.Mixed,
     required: false
   },
   messages: {

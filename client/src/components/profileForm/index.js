@@ -1,14 +1,13 @@
 import styled from "styled-components";
 import { Marginer } from "../marginer";
 import { deviceSize } from "../responsive";
-import { updateUser, deleteUser, logoutUser } from "../../actions/authActions";
+import { updateUser, deleteUser, logoutUser, uploadUserImage } from "../../actions/authActions";
 // from https://www.npmjs.com/package/react-custom-checkbox
 import { withRouter } from 'react-router-dom';
 import Checkbox from "react-custom-checkbox";
 import { connect } from "react-redux";
 import * as Icon from "react-icons/fi";
 import { Component } from "react";
-import axios from "axios";
 
 const BoxContainer = styled.div`
   width: 100%;
@@ -164,6 +163,11 @@ class FormProfile extends Component {
       languages = [],
       documents = [],
     } = this.userData;
+  
+   let picture = profilePicture;
+    if(typeof profilePicture !== 'string'){
+        picture = `data:image/png;base64,${profilePicture.buffer.toString('base64')}`
+    }
     this.state = {
       first_name: first_name,
       last_name: last_name,
@@ -177,7 +181,7 @@ class FormProfile extends Component {
       languages: languages,
       documents: documents,
       selectedFile: {
-        preview: profilePicture,
+        preview: picture,
         raw: ""
       },
       pictureChanged: false
@@ -213,9 +217,8 @@ class FormProfile extends Component {
     e.preventDefault();
     const formData = new FormData();
     formData.append("image", this.state.selectedFile.raw);
-    axios.post("/api/users/upload", formData)
-      .then(res => console.log(res))
-      .catch(err => console.log(err));
+    formData.append("_id", this.userData._id);
+    this.props.uploadUserImage(formData, this.props.history);
     this.setState({pictureChanged: false})
   };
 
@@ -433,5 +436,5 @@ const mapStateToProps = state => ({
 });
 export default withRouter(connect(
   mapStateToProps,
-  { updateUser, deleteUser, logoutUser }
+  { updateUser, deleteUser, logoutUser, uploadUserImage }
 )(FormProfile));

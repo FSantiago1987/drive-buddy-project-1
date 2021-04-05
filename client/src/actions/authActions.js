@@ -6,6 +6,20 @@ import {
   SET_CURRENT_USER,
   USER_LOADING
 } from "./types";
+export const uploadUserImage = (formData, history) => dispatch => {
+  axios.post("/api/users/upload", formData)
+    .then(res => {
+      localStorage.setItem("userData", JSON.stringify(res.data));
+      history.push("/profile");
+      alert("Picture updated");
+    }) // re-direct to profile on successful update
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
 // Update User
 export const updateUser = (userData, history) => dispatch => {
   axios

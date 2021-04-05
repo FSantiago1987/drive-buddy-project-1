@@ -9,6 +9,14 @@ const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
 // Load User model
 const User = require("../../models/User");
+// Fetch instructors
+router.get("/instructors", (req,res) => {
+  User.find({ user_type: 'instructor' }).then(users => {
+    if (users) {
+      return res.send(users);
+    }
+  });
+});
 router.put("/update", (req,res) => {
   let id = req.body._id;
   let payload = req.body;
@@ -146,8 +154,21 @@ router.post("/login", (req, res) => {
   // @route POST api/users/upload
   const upload = multer();
   router.post("/upload", upload.single("image"), function(req, res){
-    console.log(req.file);
-    console.log("File Uploaded");
+    const img = req.file;
+    const _id = req.body._id;
+    User.findByIdAndUpdate({_id: _id}, {profilePicture: img}, function(err, result){
+      if(err){
+        res.send(err)
+      }
+      else{
+        User.findOne({ _id: result._id }).then(user => {
+          if (user) {
+            return res.send(user);
+          }
+        });
+          
+      }
+    })
   })
 
   module.exports = router;
