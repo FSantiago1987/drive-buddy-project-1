@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import { Marginer } from "../marginer";
 import { deviceSize } from "../responsive";
-// from https://www.npmjs.com/package/react-custom-checkbox
-import Checkbox from "react-custom-checkbox";
-import * as Icon from "react-icons/fi";
-import Barney from "../../images/Barney.jpg";
 import { Component } from "react";
+import TableContainer from '@material-ui/core/TableContainer';
+import Paper from '@material-ui/core/Paper';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 const BoxContainer = styled.div`
   width: 100%;
@@ -119,48 +119,37 @@ const ContentContainer = styled.div`
   }
 `;
 
-const TableContainer = styled.div`
-font-size: 1.1rem;
-color: #fff;
-text-align: center;
-margin-bottom: 10px;
-font-weight: 100;
-`;
+const users = [
+  { name: 'Name 1', date: '01/01/1900', rating: '5', comments: 'comment 1' },
+  { name: 'Name 2', date: '01/01/1900', rating: '5', comments: 'comment 2' },
+  { name: 'Name 3', date: '01/01/1900', rating: '5', comments: 'comment 3' },
+];
 
-function UserList() {
-  const users = [
-    { name: 'Name 1', date: '01/01/1900', rating: '5', comments: 'comment 1' },
-    { name: 'Name 2', date: '01/01/1900', rating: '5', comments: 'comment 2' },
-    { name: 'Name 3', date: '01/01/1900', rating: '5', comments: 'comment 3' },
-  ];
+function RatingTable() {
 
   return (
-    <table>
-      <td>
-        <th>Name</th>
-        {users.map((user, idx) => (
-          <tr key={{ idx }}>{user.name}</tr>
-        ))}
-      </td>
-      <td>
-        <th>Date</th>
-        {users.map((user, idx) => (
-          <tr key={{ idx }}>{user.date}</tr>
-        ))}
-      </td>
-      <td>
-        <th>Rating</th>
-        {users.map((user, idx) => (
-          <tr key={{ idx }}>{user.rating}</tr>
-        ))}
-      </td>
-      <td>
-        <th>Comments</th>
-        {users.map((user, idx) => (
-          <tr key={{ idx }}>{user.comments}</tr>
-        ))}
-      </td>
-    </table>
+    <TableContainer component={Paper}>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Date</th>
+            <th>Rating <FontAwesomeIcon icon={faStar} /></th>
+            <th>Comments</th>
+          </tr>
+        </thead>
+        <tbody>
+          {users.map((user, idx) => (
+            <tr>
+              <td key={{ idx }}>{user.name}</td>
+              <td key={{ idx }}>{user.date}</td>
+              <td key={{ idx }}>{user.rating}</td>
+              <td key={{ idx }}>{user.comments}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </TableContainer>
   );
 }
 
@@ -195,7 +184,8 @@ class FormRateInstructor extends Component {
               <Input
                 name="name"
                 id="name"
-                value={this.state.name !== "" ? this.state.name : "kneau Reeves"}
+                placeholder="Name"
+                value={this.state.name}
                 onChange={this.handleChange}
               />
             </ContentContainer>
@@ -221,7 +211,9 @@ class FormRateInstructor extends Component {
         </BoxContainer>
         <BoxContainer>
           <TableContainer>
-            {UserList()}
+            <br></br>
+            <br></br>
+            {RatingTable()}
           </TableContainer>
         </BoxContainer>
       </div>

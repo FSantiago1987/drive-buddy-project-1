@@ -131,6 +131,10 @@ class Navbar extends Component {
                     <Marginer direction="horizontal" margin={10} />
                     <Separator />
                     <Marginer direction="horizontal" margin={10} />
+                    <AchorLink href="/users_list">List of Users</AchorLink>
+                    <Marginer direction="horizontal" margin={10} />
+                    <Separator />
+                    <Marginer direction="horizontal" margin={10} />
                     {username && (
                         <AchorLink href="/profile">
                             <LogoutButton onClick={this.onLogoutClick}>Logout</LogoutButton>

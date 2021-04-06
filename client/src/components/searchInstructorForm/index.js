@@ -1,13 +1,20 @@
 import styled from "styled-components";
 import { Marginer } from "../marginer";
 import { deviceSize } from "../responsive";
-// from https://www.npmjs.com/package/react-custom-checkbox
-import Checkbox from "react-custom-checkbox";
-import * as Icon from "react-icons/fi";
-import Barney from "../../images/Barney.jpg";
 import React, { Component } from "react";
 import Select from "react-select";
 import classnames from "classnames";
+import TableContainer from '@material-ui/core/TableContainer';
+import Paper from '@material-ui/core/Paper';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye } from '@fortawesome/free-solid-svg-icons';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { faPhoneAlt } from '@fortawesome/free-solid-svg-icons';
+
+
+// import Box from '@material-ui/core/Box';
+// import Typography from '@material-ui/core/Typography';
+// import Rating from '@material-ui/lab/Rating';
 
 const BoxContainer = styled.div`
   width: 100%;
@@ -121,68 +128,64 @@ const ContentContainer = styled.div`
   }
 `;
 
-const TableContainer = styled.div`
-font-size: 1.1rem;
-color: #fff;
-text-align: center;
-margin-bottom: 10px;
-font-weight: 100;
-`;
+const users = [
+  { name: 'Name 1', gender: 'female', email: 'a@a.com', language: 'English', phone: '435-455-6789', rating: '5' },
+  { name: 'Name 2', gender: 'male', email: 'a@a.com', language: 'English', phone: '435-455-6789', rating: '4.3' },
+  { name: 'Name 3', gender: 'male', email: 'a@a.com', language: 'English', phone: '435-455-6789', rating: '4.9' },
+];
 
-function UserList() {
-  const users = [
-    { name: 'Name 1', gender: 'female', email: 'a@a.com', language: 'English', phone: '435-455-6789', rating: '5', details: 'icon' },
-    { name: 'Name 2', gender: 'male', email: 'a@a.com', language: 'English', phone: '435-455-6789', rating: '4.3', details: 'icon' },
-    { name: 'Name 3', gender: 'male', email: 'a@a.com', language: 'English', phone: '435-455-6789', rating: '4.9', details: 'icon' },
-  ];
+
+
+function InstructorTable() {
 
   return (
-    <table>
-      <td>
-        <th>Name</th>
-        {users.map((user, idx) => (
-          <tr key={{ idx }}>{user.name}</tr>
-        ))}
-      </td>
-      <td>
-        <th>Gender</th>
-        {users.map((user, idx) => (
-          <tr key={{ idx }}>{user.gender}</tr>
-        ))}
-      </td>
-      <td>
-        <th>Email</th>
-        {users.map((user, idx) => (
-          <tr key={{ idx }}>{user.email}</tr>
-        ))}
-      </td>
-      <td>
-        <th>Language</th>
-        {users.map((user, idx) => (
-          <tr key={{ idx }}>{user.language}</tr>
-        ))}
-      </td>
-      <td>
-        <th>Phone</th>
-        {users.map((user, idx) => (
-          <tr key={{ idx }}>{user.phone}</tr>
-        ))}
-      </td>
-      <td>
-        <th>Rating</th>
-        {users.map((user, idx) => (
-          <tr key={{ idx }}>{user.rating}</tr>
-        ))}
-      </td>
-      <td>
-        <th>Details</th>
-        {users.map((user, idx) => (
-          <tr key={{ idx }}>{user.details}</tr>
-        ))}
-      </td>
-    </table>
+    <TableContainer component={Paper}>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Gender</th>
+            <th>Email</th>
+            <th>Language</th>
+            <th>Phone <FontAwesomeIcon icon={faPhoneAlt}/></th>
+            <th>Rating <FontAwesomeIcon icon={faStar} /></th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          {users.map((user, idx) => (
+            <tr>
+              <td key={{ idx }}>{user.name}</td>
+              <td key={{ idx }}>{user.gender}</td>
+              <td key={{ idx }}>{user.email}</td>
+              <td key={{ idx }}>{user.language}</td>
+              <td key={{ idx }}>{user.phone}</td>
+              <td key={{ idx }}>{user.rating}</td>
+              <td key={{ idx }}><FontAwesomeIcon icon={faEye} /></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </TableContainer>
   );
 }
+
+// function CustomizedRating() {
+//   console.log('aaaaaaaaaaaaaaaaaa' + value)
+//   const [value, setValue] = React.useState(2);
+//   return (
+//     <Box component="fieldset" mb={3} borderColor="transparent">
+//       <Typography component="legend">Controlled</Typography>
+//       <Rating
+//         name="simple-controlled"
+//         value={value}
+//         onChange={(event, newValue) => {
+//           setValue(newValue);
+//         }}
+//       />
+//     </Box>
+//   );
+// }
 
 class FormSearchInstructor extends Component {
   constructor(props) {
@@ -219,71 +222,72 @@ class FormSearchInstructor extends Component {
               <Input
                 name="name"
                 id="name"
-                value={this.state.name !== "" ? this.state.name : "kneau Reeves"}
+                placeholder="Name"
+                value={this.state.name}
                 onChange={this.handleChange}
               />
             </ContentContainer>
             <Marginer direction="horizontal" margin="8em" />
             <ContentContainer>
               <Label>Gender</Label>
-              <Select 
-                  onChange={(e)=>{this.setState({rate: e.value})}}
-                  error={errors.gender}
-                  id="gender"
-                  type="text"
-                  placeholder="Gender" 
-                  clearable={false}
-                  options={[
-                    { value: 'Male', label: 'Male' },
-                    { value: 'Female', label: 'Female' },
-                    { value: 'Other', label: 'Other' },
-                  ]}
-                  className={classnames("", {
-                    invalid: errors.gender
-                  })}
-             />
+              <Select
+                onChange={(e) => { this.setState({ rate: e.value }) }}
+                error={errors.gender}
+                id="gender"
+                type="text"
+                placeholder="Gender"
+                clearable={false}
+                options={[
+                  { value: 'Male', label: 'Male' },
+                  { value: 'Female', label: 'Female' },
+                  { value: 'Other', label: 'Other' },
+                ]}
+                className={classnames("", {
+                  invalid: errors.gender
+                })}
+              />
             </ContentContainer>
             <Marginer direction="horizontal" margin="8em" />
             <ContentContainer>
               <Label>Language</Label>
-              <Select 
-                  onChange={(e)=>{this.setState({rate: e.value})}}
-                  error={errors.language}
-                  id="language"
-                  type="text"
-                  placeholder="Language" 
-                  clearable={false}
-                  options={[
-                    { value: '1', label: 'English' },
-                    { value: '2', label: 'French' },
-                    { value: '3', label: 'Spanish' },
-                  ]}
-                  className={classnames("", {
-                    invalid: errors.language
-                  })}
-             />
+              <Select
+                onChange={(e) => { this.setState({ rate: e.value }) }}
+                error={errors.language}
+                id="language"
+                type="text"
+                placeholder="Language"
+                clearable={false}
+                options={[
+                  { value: '1', label: 'English' },
+                  { value: '2', label: 'French' },
+                  { value: '3', label: 'Spanish' },
+                ]}
+                className={classnames("", {
+                  invalid: errors.language
+                })}
+              />
             </ContentContainer>
             <Marginer direction="horizontal" margin="8em" />
             <ContentContainer>
               <Label>Rate</Label>
-              <Select 
-                  onChange={(e)=>{this.setState({rate: e.value})}}
-                  error={errors.rate}
-                  id="rate"
-                  type="text"
-                  placeholder="Rate" 
-                  clearable={false}
-                  options={[
-                    { value: '1', label: '1' },
-                    { value: '2', label: '2' },
-                    { value: '3', label: '3' },
-                    { value: '4', label: '4' },
-                    { value: '5', label: '5' }
-                  ]}
-                  className={classnames("", {
-                    invalid: errors.rate
-                  })}
-             />
+              <Select
+                onChange={(e) => { this.setState({ rate: e.value }) }}
+                error={errors.rate}
+                id="rate"
+                type="text"
+                placeholder="Rate"
+                clearable={false}
+                options={[
+                  { value: '1', label: 'Above 1' },
+                  { value: '2', label: 'Above 2' },
+                  { value: '3', label: 'Above 3' },
+                  { value: '4', label: 'Above 4' },
+                  { value: '5', label: 'Above 5' }
+                ]}
+                className={classnames("", {
+                  invalid: errors.rate
+                })}
+              />
             </ContentContainer>
             <Marginer direction="horizontal" margin="8em" />
             <ContentContainer>
@@ -294,7 +298,9 @@ class FormSearchInstructor extends Component {
         </BoxContainer>
         <BoxContainer>
           <TableContainer>
-            {UserList()}
+            <br></br>
+            <br></br>
+            {InstructorTable()}
           </TableContainer>
         </BoxContainer>
       </div>
