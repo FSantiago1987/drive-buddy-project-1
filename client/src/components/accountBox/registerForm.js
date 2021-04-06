@@ -87,7 +87,7 @@ class RegisterForm extends Component {
         this.props.registerUser(newUser, this.props.history); 
       };
     render() {
-        const { errors } = this.state;
+        const { errors } = this.state;       
     return <BoxContainer>
         <FormContainer noValidate onSubmit={this.onSubmit}>
             <Input 

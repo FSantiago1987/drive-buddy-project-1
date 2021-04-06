@@ -40,7 +40,7 @@ const Input = styled.input`
 `;
 
 const SubmitButton = styled.button`
-  width: 200px;
+  width: 150px;
   padding: 11px 20%;
   color: #fff;
   font-size: 18px;
@@ -61,27 +61,7 @@ const SubmitButton = styled.button`
   }
 `;
 
-const DeleteButton = styled.button`
-  width: 200px;
-  padding: 11px 20%;
-  color: #fff;
-  font-size: 18px;
-  font-weight: 600;
-  border: none;
-  border-radius: 50px 50px 50px 50px;
-  cursor: pointer;
-  transition: all, 240ms ease-in-out;
-  background: rgb(227, 78, 78);
-  background: linear-gradient(
-    90deg,
-    rgba(227, 78, 78, 1) 0%,
-    rgba(171, 10, 10, 0.8326681014202556) 30%,
-    rgba(66, 2, 7, 0.8914916308320203) 100%
-  );
-  &:hover {
-    filter: brightness(1.03);
-  }
-`;
+
 
 const Label = styled.label`
   font-size: 1.1rem;
@@ -91,23 +71,7 @@ const Label = styled.label`
   font-weight: 600;
 `;
 
-const LabelResponseProfile = styled.label`
-  font-size: 1rem;
-  color: #fff;
-  text-align: left;
-  margin-bottom: 10px;
-`;
 
-const PictureBox = styled.div`
-  width: 205px;
-  height: 250px;
-  img {
-    width: 100%;
-    height: 100%;
-    border-radius: 5%;
-    border: 4px solid #fff;
-  }
-`;
 
 const ContentContainer = styled.div`
   display: flex;
@@ -128,6 +92,8 @@ const users = [
   { name: 'Name 2', gender: 'male', email: 'a@a.com', language: 'English', phone: '435-455-6789', rating: '4.3' },
   { name: 'Name 3', gender: 'male', email: 'a@a.com', language: 'English', phone: '435-455-6789', rating: '4.9' },
 ];
+
+
 
 
 
@@ -208,6 +174,22 @@ class FormSearchInstructor extends Component {
 
   render() {
     const { errors } = this.state;
+    const customStyles = {
+      option: (provided, state) => ({
+        ...provided,
+        color: state.isSelected ? 'red' : 'blue',
+        padding: 20,
+      }),
+      control: () => ({
+        // none of react-select's styles are passed to <Control />
+        width: 200,
+      }),
+      singleValue: (provided, state) => {
+        const fontSize = "30px"
+        
+        return { ...provided, fontSize };
+      }
+    }
     return (
       <div>
         <BoxContainer>
@@ -231,6 +213,7 @@ class FormSearchInstructor extends Component {
                 id="gender"
                 type="text"
                 placeholder="Gender"
+                styles={customStyles}
                 clearable={false}
                 options={[
                   { value: 'Male', label: 'Male' },
