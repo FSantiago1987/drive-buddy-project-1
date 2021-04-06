@@ -18,9 +18,7 @@ const NavbarContainer = styled.div`
     align-items: center;
     justify-content: space-between;
     padding: 0 1.5em;
-
     background-color: ${({ useTransparent }) => useTransparent ? "transparent" : "#264653"};
-
     @media screen and (max-width: ${deviceSize.mobile}px) {
         justify-content: flex-start;
     }
@@ -39,7 +37,6 @@ const AchorLink = styled.a`
     cursor: pointer;
     outline: none;
     transition: all 200ms ease-in-out;
-
     &:hover {
         filter: contrast(0.6);
     }
@@ -73,11 +70,9 @@ const LogoutButton = styled.button`
     background-color: rgb(227, 78, 78);
     cursor: pointer;
     transition: all 200ms ease-in-out;
-
     &:hover {
         filter: brightness(1.03);
     }
-
     &:focus {
         outline: none;
     }
@@ -88,75 +83,82 @@ class Navbar extends Component {
     onLogoutClick = e => {
         e.preventDefault();
         this.props.logoutUser();
-      };  
+    };
     render() {
         const { useTransparent } = this.props;
         const { user } = this.props.auth;
         let username = user.username;
-          return (
-          <NavbarContainer useTransparent={useTransparent}>
-          <LinkLogo to="/">
-              <BrandLogo logoSize={30} textSize={30} doNotUseGradient />
-          </LinkLogo>
-          <AccessibilityContainer>
-              {username && (
-                  <WelcomeMessage>Welcome, {username} </WelcomeMessage>
-              )}  
-              {username && (
-                  <Marginer direction="horizontal" margin={10} />
-              )}                 
-              {username && (
-                  <Separator />
-              )}  
-              {username && (
-                  <Marginer direction="horizontal" margin={10} />
-              )}              
-              {username &&  (
-                  <AchorLink href="/profile">My Profile</AchorLink>
-              )}
-              {username && (
-                  <Marginer direction="horizontal" margin={10} />
-              )}  
-              {username &&  (
-                  <Separator />
-              )} 
-              {username &&   (
-                  <Marginer direction="horizontal" margin={10} />
-              )}    
-              <AchorLink href="/search">Search</AchorLink>
-              <Marginer direction="horizontal" margin={10} />  
-              <Separator />
-              <Marginer direction="horizontal" margin={10} />
-              {username &&  (
-                  <AchorLink href="/profile">
-                      <LogoutButton onClick={this.onLogoutClick}>Logout</LogoutButton>
-                  </AchorLink>
-              )}
-              {!username && (
-                  <AchorLink href="/customer/access/signup" initialActive='signup'>
-                      <Button size={11}>Register</Button>
-                  </AchorLink>
-              )} 
-              {!username && (
-                  <Marginer direction="horizontal" margin={8} />
-              )} 
-              {!username && (
-                  <AchorLink href="/customer/access/signin" initialActive='signin'>Login</AchorLink>
-              )} 
-          </AccessibilityContainer>
-      </NavbarContainer>
-          )}
-
-
+        return (
+            <NavbarContainer useTransparent={useTransparent}>
+                <LinkLogo to="/">
+                    <BrandLogo logoSize={30} textSize={30} doNotUseGradient />
+                </LinkLogo>
+                <AccessibilityContainer>
+                    {username && (
+                        <WelcomeMessage>Welcome, {username} </WelcomeMessage>
+                    )}
+                    {username && (
+                        <Marginer direction="horizontal" margin={10} />
+                    )}
+                    {username && (
+                        <Separator />
+                    )}
+                    {username && (
+                        <Marginer direction="horizontal" margin={10} />
+                    )}
+                    {username && (
+                        <AchorLink href="/profile">My Profile</AchorLink>
+                    )}
+                    {username && (
+                        <Marginer direction="horizontal" margin={10} />
+                    )}
+                    {username && (
+                        <Separator />
+                    )}
+                    {username && (
+                        <Marginer direction="horizontal" margin={10} />
+                    )}
+                    <AchorLink href="/search_instructor">Search</AchorLink>
+                    <Marginer direction="horizontal" margin={10} />
+                    <Separator />
+                    <Marginer direction="horizontal" margin={10} />
+                    <AchorLink href="/rate_instructor">Rate</AchorLink>
+                    <Marginer direction="horizontal" margin={10} />
+                    <Separator />
+                    <Marginer direction="horizontal" margin={10} />
+                    <AchorLink href="/users_list">List of Users</AchorLink>
+                    <Marginer direction="horizontal" margin={10} />
+                    <Separator />
+                    <Marginer direction="horizontal" margin={10} />
+                    {username && (
+                        <AchorLink href="/profile">
+                            <LogoutButton onClick={this.onLogoutClick}>Logout</LogoutButton>
+                        </AchorLink>
+                    )}
+                    {!username && (
+                        <AchorLink href="/customer/access/signup" initialActive='signup'>
+                            <Button size={11}>Register</Button>
+                        </AchorLink>
+                    )}
+                    {!username && (
+                        <Marginer direction="horizontal" margin={8} />
+                    )}
+                    {!username && (
+                        <AchorLink href="/customer/access/signin" initialActive='signin'>Login</AchorLink>
+                    )}
+                </AccessibilityContainer>
+            </NavbarContainer>
+        )
+    }
 }
 Navbar.propTypes = {
     logoutUser: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired
-  };
-  const mapStateToProps = state => ({
+};
+const mapStateToProps = state => ({
     auth: state.auth
-  });
+});
 export default connect(
     mapStateToProps,
     { logoutUser }
-  )(Navbar);
+)(Navbar);

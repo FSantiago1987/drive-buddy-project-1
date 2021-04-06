@@ -11,6 +11,9 @@ import Dashboard from "./components/dashboard/Dashboard";
 import {Homepage} from "./containers/HomePage";
 import { CustomerAccessPage } from './containers/CustomerAccessPage';
 import Profile  from './containers/ProfilePage';
+import SearchInstructor from './containers/SearchInstructor';
+import RateInstructor from './containers/RateInstructor';
+import UsersList from './containers/UsersList';
 
 // Pull test
 
@@ -43,6 +46,9 @@ function App() {
                 <Route exact path="/" component={Homepage} />
                 <Route path="/customer/access/:action" exact component={CustomerAccessPage} />
                 <PrivateRoute path="/profile" exact component={Profile} />
+                <PrivateRoute path="/search_instructor" exact component={SearchInstructor} />
+                <PrivateRoute path="/rate_instructor" exact component={RateInstructor} />
+                <PrivateRoute path="/users_list" exact component={UsersList} />
                 {/* <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} /> */}
               </Switch>
