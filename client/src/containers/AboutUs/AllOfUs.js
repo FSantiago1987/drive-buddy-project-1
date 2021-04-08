@@ -17,7 +17,6 @@ const TopSectionContainer = styled.div`
     }
 `;
 
-
 const BackgroundFilter = styled.div`
    width: 100%;
    height: 100%;
@@ -35,7 +34,6 @@ const TopSectionInnerContainer = styled.div`
         justify-content: center;
     }
 `;
-
 
 const RateInstructorContainer = styled.div`
     display: flex;

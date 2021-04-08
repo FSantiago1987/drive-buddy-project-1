@@ -7,8 +7,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import FormProfile  from '../../components/profileForm';
 
-
-
 const TopSectionContainer = styled.div`
     width: 100%;
     height: 820px;
@@ -22,7 +20,6 @@ const TopSectionContainer = styled.div`
         height: 500px;
     }
 `;
-
 
 const BackgroundFilter = styled.div`
    width: 100%;
@@ -43,7 +40,6 @@ const TopSectionInnerContainer = styled.div`
         justify-content: center;
     }
 `;
-
 
 const ProfileContainer = styled.div`
     display: flex;
@@ -100,9 +96,6 @@ const MessageText = styled.p`
     color: #fff;
 `
 
-
-
-
 export function TopProfile(props){
     const { children } = props;
     return <TopSectionContainer>
@@ -110,15 +103,8 @@ export function TopProfile(props){
             {children}
             <TopSectionInnerContainer>
                 <ProfileContainer>
-                    <TitleText>User Profile</TitleText>
-                    <Marginer direction="vertical" margin="2em" />
-                    <MessageIcon>
-                        <FontAwesomeIcon icon={faEnvelope} />
-                        <Marginer direction="horizontal" margin="15px" />
-                        <MessageText>(1) Message Unread</MessageText>
-                    </MessageIcon>
-                    <Marginer direction="vertical" margin="2em" />
-                    <FormProfile />
+                    <TitleText>About Us</TitleText>
+                   
                 </ProfileContainer>
             </TopSectionInnerContainer>
         </BackgroundFilter>
