@@ -14,6 +14,7 @@ import Profile  from './containers/ProfilePage';
 import SearchInstructor from './containers/SearchInstructor';
 import RateInstructor from './containers/RateInstructor';
 import UsersList from './containers/UsersList';
+import AboutUs from './containers/AboutUs';
 
 // Pull test
 
@@ -49,6 +50,8 @@ function App() {
                 <PrivateRoute path="/search_instructor" exact component={SearchInstructor} />
                 <PrivateRoute path="/rate_instructor" exact component={RateInstructor} />
                 <PrivateRoute path="/users_list" exact component={UsersList} />
+                <PrivateRoute path="/about_Us" exact component={AboutUs} />
+
                 {/* <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} /> */}
               </Switch>

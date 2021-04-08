@@ -8,6 +8,7 @@ import footerLogo from "../../images/QUADRADA.png";
 import { deviceSize } from '../responsive';
 import { useMediaQuery } from 'react-responsive';
 
+
 const FooterContainer = styled.div`
     width: 100%;
     min-height: 270px;

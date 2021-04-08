@@ -24,8 +24,9 @@ const Input = styled.input`
   padding: 0.2rem !important;
   width: 200px !important;
   height: 30px;
+  font-size: 22px !important;
   border-radius: 0.3rem !important;
-  color: ${(props) => props.inputColor || "palevioletred"};
+  color: ${(props) => props.inputColor || "blue"};
   background: #fff !important;
 
   &::placeholder {
