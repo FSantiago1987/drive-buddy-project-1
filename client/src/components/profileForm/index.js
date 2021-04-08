@@ -21,15 +21,18 @@ const FormContainer = styled.form`
 `;
 
 const Input = styled.input`
-  padding: 0.2rem !important;
+  font-family: Noto Sans SC;
+  font-weight: 100;
+  font-size: 14px !important;
+  padding-left: 10px !important;
   width: 200px !important;
   height: 30px;
   border-radius: 0.3rem !important;
-  color: ${(props) => props.inputColor || "palevioletred"};
+  color: ${(props) => props.inputColor || "#21867a"};
   background: #fff !important;
 
   &::placeholder {
-    color: ${(props) => props.inputColor || "palevioletred"};
+    color: ${(props) => props.inputColor || "#21867a"};
   }
 `;
 
@@ -37,46 +40,56 @@ const SubmitButton = styled.button`
   width: 200px;
   padding: 11px 20%;
   color: #fff;
-  font-size: 18px;
+  font-size: 19.5px;
   font-weight: 600;
   border: none;
-  border-radius: 50px 50px 50px 50px;
+  border-radius: 3px;
+  width: 200px;
+  padding: 11px 20%;
+  color: #fff;
+  font-size: 19.5px;
+  font-weight: 600;
+  border: none;
+  border-radius: 3px;
+  background-color: ${({ color }) => color ? color : "#2a9d8f"};
   cursor: pointer;
-  transition: all, 240ms ease-in-out;
-  background: rgb(0, 212, 255);
-  background: linear-gradient(
-    90deg,
-    rgba(0, 212, 255, 1) 0%,
-    rgba(1, 163, 164, 1) 30%,
-    rgba(2, 0, 36, 1) 100%
-  );
+  transition: all 200ms ease-in-out;
 
   &:hover {
-    filter: brightness(1.03);
+      background-color: #21867a;
+  }
+
+  &:focus {
+      outline: none;
   }
 `;
 
 const DeleteButton = styled.button`
-  width: 200px;
-  padding: 11px 20%;
-  color: #fff;
-  font-size: 18px;
-  font-weight: 600;
-  border: none;
-  border-radius: 50px 50px 50px 50px;
-  cursor: pointer;
-  transition: all, 240ms ease-in-out;
-  background: rgb(227, 78, 78);
-  background: linear-gradient(
-    90deg,
-    rgba(227, 78, 78, 1) 0%,
-    rgba(171, 10, 10, 0.8326681014202556) 30%,
-    rgba(66, 2, 7, 0.8914916308320203) 100%
-  );
+width: 200px;
+padding: 11px 20%;
+color: #fff;
+font-size: 19.5px;
+font-weight: 600;
+border: none;
+border-radius: 3px;
+width: 200px;
+padding: 11px 20%;
+color: #fff;
+font-size: 19.5px;
+font-weight: 600;
+border: none;
+border-radius: 3px;
+background-color: ${({ color }) => color ? color : "#8f0a0f"};
+cursor: pointer;
+transition: all 200ms ease-in-out;
 
-  &:hover {
-    filter: brightness(1.03);
-  }
+&:hover {
+    background-color: #80090D;
+}
+
+&:focus {
+    outline: none;
+}
 `;
 
 const UploadButton = styled.button`
@@ -105,11 +118,12 @@ const UploadButton = styled.button`
 `;
 
 const LabelProfile = styled.label`
-  font-size: 1.1rem;
+  font-family: Noto Sans SC;
+  font-weight: 600;
+  font-size: 15px;
   color: #fff;
   text-align: left;
   margin-bottom: 10px;
-  font-weight: 600;
 `;
 
 const LabelResponseProfile = styled.label`
@@ -253,6 +267,7 @@ class FormProfile extends Component {
               name="first_name"
               id="first_name"
               value={this.state.first_name }
+              disabled placeholder={this.state.first_name}
               onChange={this.handleChange}
             />
             <Marginer direction="vertical" margin="0.5em" />
@@ -260,7 +275,8 @@ class FormProfile extends Component {
             <Input
               name="last_name"
               id="last_name"
-              value={this.state.last_name }
+              value={this.state.last_name}
+              disabled placeholder={this.state.last_name}
               onChange={this.handleChange}
             />
             <Marginer direction="vertical" margin="0.5em" />
@@ -299,7 +315,8 @@ class FormProfile extends Component {
           <ContentContainer>
             <LabelProfile>Your Email</LabelProfile>
             <Input
-              placeholder={ this.state.email }
+              disabled placeholder={ this.state.email }
+              value={this.state.email}
               type="text"
               onChange={this.handleChange}
             />
@@ -320,7 +337,7 @@ class FormProfile extends Component {
                 marginLeft: 5,
                 userSelect: "none",
                 color: "#fff",
-                fontSize: "1rem",
+                fontSize: "13px",
               }}
               label="English"
               onChange={this.handleChange}
@@ -334,7 +351,7 @@ class FormProfile extends Component {
                 marginLeft: 5,
                 userSelect: "none",
                 color: "#fff",
-                fontSize: "1rem",
+                fontSize: "13px",
               }}
               label="French"
               onChange={this.handleChange}
@@ -348,7 +365,7 @@ class FormProfile extends Component {
                 marginLeft: 5,
                 userSelect: "none",
                 color: "#fff",
-                fontSize: "1rem",
+                fontSize: "13px",
               }}
               label="Spanish"
               onChange={this.handleChange}
@@ -360,6 +377,7 @@ class FormProfile extends Component {
             <Input
               type="date"
               value={this.state.dateOfBirth}
+              disabled placeholder={this.state.dateOfBirth}
               onChange={this.handleChange}
             />
             <Marginer direction="vertical" margin="3em" />
@@ -378,7 +396,7 @@ class FormProfile extends Component {
                 marginLeft: 5,
                 userSelect: "none",
                 color: "#fff",
-                fontSize: "1rem",
+                fontSize: "13px",
               }}
               label="Driver License"
               onChange={this.handleChange}
@@ -392,7 +410,7 @@ class FormProfile extends Component {
                 marginLeft: 5,
                 userSelect: "none",
                 color: "#fff",
-                fontSize: "1rem",
+                fontSize: "13px",
               }}
               label="Car's Document"
               onChange={this.handleChange}
@@ -406,7 +424,7 @@ class FormProfile extends Component {
                 marginLeft: 5,
                 userSelect: "none",
                 color: "#fff",
-                fontSize: "1rem",
+                fontSize: "13px",
               }}
               label="Instructor License"
               onChange={this.handleChange}

@@ -7,16 +7,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import FormProfile  from '../../components/profileForm';
 
-
-
 const TopSectionContainer = styled.div`
+    font-family: Noto Sans SC;
+    font-weight: 100;
     width: 100%;
     height: 820px;
     background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%,rgba(0,0,0,0.3) 100%), url(${TopProfileBackgroundImg}) no-repeat;
     background-position: 0px 0px;
     background-size: cover;
     
-
     @media screen and (max-width: ${deviceSize.mobile}px) {
         background-position: -100px 0px;
         height: 500px;
@@ -98,10 +97,7 @@ const MessageIcon = styled.div`
 const MessageText = styled.p`
     font-size: 1rem;
     color: #fff;
-`
-
-
-
+`;
 
 export function TopProfile(props){
     const { children } = props;
@@ -110,7 +106,7 @@ export function TopProfile(props){
             {children}
             <TopSectionInnerContainer>
                 <ProfileContainer>
-                    <TitleText>User Profile</TitleText>
+                    <TitleText>Welcome, first_name</TitleText>
                     <Marginer direction="vertical" margin="2em" />
                     <MessageIcon>
                         <FontAwesomeIcon icon={faEnvelope} />

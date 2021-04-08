@@ -11,11 +11,8 @@ import { useMediaQuery } from 'react-responsive';
 const FooterContainer = styled.div`
     font-family: Noto Sans SC;
     width: 100%;
-    min-height: 270px;
     display: flex;
     flex-direction: column;
-    padding: 2em 3em;
-    padding-bottom: 0;
 
     @media screen and (max-width: ${deviceSize.mobile}px) {
         border-top: 0;
@@ -54,7 +51,7 @@ const BottomContainer = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 70px;
+    height: 50px;
     border-top: 0.6px solid rgba(0, 0, 0, 0.3);
     padding: 0 100px;
 
@@ -173,7 +170,7 @@ export function Footer(props){
                     </RightContainer>                     
                 </TopContainer>
             )}
-        {!isMobile && (<Marginer direction="vertical" margin={25} />)}
+        {!isMobile && (<Marginer direction="vertical" margin={0} />)}
         <BottomContainer>
             <LeftContainer>
                 <BrandLogo color="#8a8a8a" textSize={isMobile ? 6 : 12} hideLogo footerGradient />
