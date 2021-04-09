@@ -165,8 +165,8 @@ class FormProfile extends Component {
   constructor(props) {
     super(props);
     this.userData = JSON.parse(localStorage.userData);
-    const { 
-      first_name = "", 
+    const {
+      first_name = "",
       last_name = "",
       email = "",
       dateOfBirth = "",
@@ -178,10 +178,12 @@ class FormProfile extends Component {
       languages = [],
       documents = [],
     } = this.userData;
-  
-   let picture = profilePicture;
-    if(typeof profilePicture !== 'string'){
-        picture = `data:image/png;base64,${profilePicture.buffer.toString('base64')}`
+
+    let picture = profilePicture;
+    if (typeof profilePicture !== "string") {
+      picture = `data:image/png;base64,${profilePicture.buffer.toString(
+        "base64"
+      )}`;
     }
     this.state = {
       first_name: first_name,
@@ -197,7 +199,7 @@ class FormProfile extends Component {
       documents: documents,
       selectedFile: {
         preview: picture,
-        raw: ""
+        raw: "",
       },
       pictureChanged: false,
       isCheckedEnglish: false,
@@ -205,7 +207,7 @@ class FormProfile extends Component {
       isCheckedSpanish: false,
       isCheckedDriverLicense: false,
       isCheckedCarDocument: false,
-      isCheckedInstructorLicense: false
+      isCheckedInstructorLicense: false,
     };
     console.log(this.userData);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -213,43 +215,64 @@ class FormProfile extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.profileImageHandler = this.profileImageHandler.bind(this);
     this.handleUpload = this.handleUpload.bind(this);
-    this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
   }
 
-  handleChange(evt){
-    if(evt.target.type === "checkbox"){
-      this.setState({ [evt.target.name]: evt.target.checked })
+  handleChange(evt) {
+    evt.preventDefault();
+    if (evt.target.type === "checkbox") {
+      this.setState({ [evt.target.name]: evt.target.checked });
+      if (evt.target.checked === false) {
+        if (evt.target.id === "languages") {
+          this.setState((prevState) => ({
+            languages: prevState.languages.filter(
+              (l) => l !== evt.target.value
+            ),
+          }));
+        } else {
+          this.setState((prevState) => ({
+            documents: prevState.documents.filter(
+              (d) => d !== evt.target.value
+            ),
+          }));
+        }
+      } else {
+        if (evt.target.id === "languages") {
+          this.setState((prevState) => ({
+            languages: [...prevState.languages, evt.target.value],
+          }));
+        }
+        if (evt.target.id === "documents") {
+          this.setState((prevState) => ({
+            documents: [...prevState.documents, evt.target.value],
+          }));
+        }
+      }
     } else {
-      this.setState({[evt.target.name]:evt.target.value});
+      this.setState({ [evt.target.name]: evt.target.value });
     }
   }
 
-  handleCheckboxChange = evt => {
-      this.setState({ [evt.target.name]: evt.target.checked })
-  }
-  profileImageHandler(evt){
-    if(evt.target.files.length) {
-      this.setState(prevState => ({
+  profileImageHandler(evt) {
+    if (evt.target.files.length) {
+      this.setState((prevState) => ({
         selectedFile: {
           ...prevState.selectedFile,
           preview: URL.createObjectURL(evt.target.files[0]),
-          raw: evt.target.files[0]
+          raw: evt.target.files[0],
         },
-        pictureChanged: {...prevState.pictureChanged, pictureChanged: true}
-      }))
+        pictureChanged: { ...prevState.pictureChanged, pictureChanged: true },
+      }));
     }
   }
 
-
-  handleUpload = async e => {
+  handleUpload = async (e) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("image", this.state.selectedFile.raw);
     formData.append("_id", this.userData._id);
     this.props.uploadUserImage(formData, this.props.history);
-    this.setState({pictureChanged: false})
+    this.setState({ pictureChanged: false });
   };
-
 
   handleSubmit(evt) {
     const updatedUser = {
@@ -261,15 +284,19 @@ class FormProfile extends Component {
       // password: "",
       profilePicture: this.state.profilePicture,
     };
-    if(this.state.profileRole === "instructor"){
-      Object.assign(updateUser, {messages: this.state.messages, languages: this.state.languages, documents: this.state.documents,})
+    if (this.state.profileRole === "instructor") {
+      Object.assign(updateUser, {
+        messages: this.state.messages,
+        languages: this.state.languages,
+        documents: this.state.documents,
+      });
     }
-    this.props.updateUser(updatedUser, this.props.history); 
+    this.props.updateUser(updatedUser, this.props.history);
   }
 
   handleDelete(evt) {
-    this.props.deleteUser({_id:this.userData._id}, this.props.history);
-    this.props.logoutUser(); 
+    this.props.deleteUser({ _id: this.userData._id }, this.props.history);
+    this.props.logoutUser();
   }
   render() {
     return (
@@ -280,8 +307,9 @@ class FormProfile extends Component {
             <Input
               name="first_name"
               id="first_name"
-              value={this.state.first_name }
-              disabled placeholder={this.state.first_name}
+              value={this.state.first_name}
+              disabled
+              placeholder={this.state.first_name}
               onChange={this.handleChange}
             />
             <Marginer direction="vertical" margin="0.5em" />
@@ -290,46 +318,50 @@ class FormProfile extends Component {
               name="last_name"
               id="last_name"
               value={this.state.last_name}
-              disabled placeholder={this.state.last_name}
+              disabled
+              placeholder={this.state.last_name}
               onChange={this.handleChange}
             />
             <Marginer direction="vertical" margin="0.5em" />
             <LabelProfile>Profile picture</LabelProfile>
             <PictureBox>
-            <label htmlFor="upload-button">
-              {this.state.selectedFile.preview ? (
+              <label htmlFor="upload-button">
+                {this.state.selectedFile.preview ? (
                   <img
-                  src={this.state.selectedFile.preview}
-                  alt="Profile"
-                  onChange={this.handleChange}
-                />
-              ) : (
-                <>
-                <span className="fa-stack fa-2x mt-3 mb-2">
-                  <i className="fas fa-circle fa-stack-2x" />
-                  <i className="fas fa-store fa-stack-1x fa-inverse" />
-                </span>
-                <h5 className="text-center">Upload your photo</h5>
-                </>                
-              )}
+                    src={this.state.selectedFile.preview}
+                    alt="Profile"
+                    onChange={this.handleChange}
+                  />
+                ) : (
+                  <>
+                    <span className="fa-stack fa-2x mt-3 mb-2">
+                      <i className="fas fa-circle fa-stack-2x" />
+                      <i className="fas fa-store fa-stack-1x fa-inverse" />
+                    </span>
+                    <h5 className="text-center">Upload your photo</h5>
+                  </>
+                )}
               </label>
               <input
                 type="file"
                 id="upload-button"
-                style={{ display: "none"}}
+                style={{ display: "none" }}
                 onChange={this.profileImageHandler}
                 accept=".jpg"
               />
             </PictureBox>
             {this.state.pictureChanged && (
-              <UploadButton onClick={this.handleUpload}>Upload Picture</UploadButton>
+              <UploadButton onClick={this.handleUpload}>
+                Upload Picture
+              </UploadButton>
             )}
           </ContentContainer>
           <Marginer direction="horizontal" margin="8em" />
           <ContentContainer>
             <LabelProfile>Your Email</LabelProfile>
             <Input
-              disabled placeholder={ this.state.email }
+              disabled
+              placeholder={this.state.email}
               value={this.state.email}
               type="text"
               onChange={this.handleChange}
@@ -337,41 +369,43 @@ class FormProfile extends Component {
             <Marginer direction="vertical" margin="3em" />
             <LabelProfile>Chosen Profile</LabelProfile>
             <LabelResponseProfile>
-              ✔{" "}
-              {this.state.profileRole }
+              ✔ {this.state.profileRole}
             </LabelResponseProfile>
             <Marginer direction="vertical" margin="3em" />
             <LabelProfile>Languages</LabelProfile>
             <Marginer direction="vertical" margin="1em" />
             <LabelResponseProfile>
               <Checkbox
-                  name="isCheckedEnglish"
-                  value="English"
-                  checked={this.state.isCheckedEnglish}
-                  onChange={this.handleChange}
-                />
-                <span style={{ marginLeft: 8 }}>English</span>
+                name="isCheckedEnglish"
+                value="English"
+                id="languages"
+                checked={this.state.isCheckedEnglish}
+                onChange={this.handleChange}
+              />
+              <span style={{ marginLeft: 8 }}>English</span>
             </LabelResponseProfile>
             <Marginer direction="vertical" margin="1em" />
             <LabelResponseProfile>
               <Checkbox
-                  name="isCheckedFrench"
-                  value="French"
-                  checked={this.state.isCheckedFrench}
-                  onChange={this.handleChange}
-                />
-                <span style={{ marginLeft: 8 }}>French</span>
+                name="isCheckedFrench"
+                value="French"
+                id="languages"
+                checked={this.state.isCheckedFrench}
+                onChange={this.handleChange}
+              />
+              <span style={{ marginLeft: 8 }}>French</span>
             </LabelResponseProfile>
             <Marginer direction="vertical" margin="1em" />
             <LabelResponseProfile>
               <Checkbox
-                  name="isCheckedSpanish"
-                  value="Spanish"
-                  checked={this.state.isCheckedSpanish}
-                  onChange={this.handleChange}
-                />
-                <span style={{ marginLeft: 8 }}>Spanish</span>
-            </LabelResponseProfile>                        
+                name="isCheckedSpanish"
+                value="Spanish"
+                id="languages"
+                checked={this.state.isCheckedSpanish}
+                onChange={this.handleChange}
+              />
+              <span style={{ marginLeft: 8 }}>Spanish</span>
+            </LabelResponseProfile>
           </ContentContainer>
           <Marginer direction="horizontal" margin="8em" />
           <ContentContainer>
@@ -379,46 +413,51 @@ class FormProfile extends Component {
             <Input
               type="date"
               value={this.state.dateOfBirth}
-              disabled placeholder={this.state.dateOfBirth}
+              disabled
+              placeholder={this.state.dateOfBirth}
               onChange={this.handleChange}
             />
             <Marginer direction="vertical" margin="3em" />
             <LabelProfile>Gender</LabelProfile>
             <LabelResponseProfile>
-              ✔ {this.state.gender !== "" ? this.state.gender : "Rather not say"}
+              ✔{" "}
+              {this.state.gender !== "" ? this.state.gender : "Rather not say"}
             </LabelResponseProfile>
             <Marginer direction="vertical" margin="3em" />
             <LabelProfile>Instructors documents</LabelProfile>
             <Marginer direction="vertical" margin="1em" />
             <LabelResponseProfile>
               <Checkbox
-                  name="isCheckedDriverLicense"
-                  value="Driver License"
-                  checked={this.state.isCheckedDriverLicense}
-                  onChange={this.handleChange}
-                />
-                <span style={{ marginLeft: 8 }}>Driver License</span>
+                name="isCheckedDriverLicense"
+                value="Driver License"
+                id="documents"
+                checked={this.state.isCheckedDriverLicense}
+                onChange={this.handleChange}
+              />
+              <span style={{ marginLeft: 8 }}>Driver License</span>
             </LabelResponseProfile>
             <Marginer direction="vertical" margin="1em" />
             <LabelResponseProfile>
               <Checkbox
-                  name="isCheckedCarDocument"
-                  value="Car Document"
-                  checked={this.state.isCheckedCarDocument}
-                  onChange={this.handleChange}
-                />
-                <span style={{ marginLeft: 8 }}>Car's Document</span>
+                name="isCheckedCarDocument"
+                value="Car Document"
+                id="documents"
+                checked={this.state.isCheckedCarDocument}
+                onChange={this.handleChange}
+              />
+              <span style={{ marginLeft: 8 }}>Car's Document</span>
             </LabelResponseProfile>
             <Marginer direction="vertical" margin="1em" />
             <LabelResponseProfile>
               <Checkbox
-                  name="isCheckedInstructorLicense"
-                  value="Instructor License"
-                  checked={this.state.isCheckedInstructorLicense}
-                  onChange={this.handleChange}
-                />
-                <span style={{ marginLeft: 8 }}>Instructor License</span>
-            </LabelResponseProfile>  
+                name="isCheckedInstructorLicense"
+                value="Instructor License"
+                id="documents"
+                checked={this.state.isCheckedInstructorLicense}
+                onChange={this.handleChange}
+              />
+              <span style={{ marginLeft: 8 }}>Instructor License</span>
+            </LabelResponseProfile>
           </ContentContainer>
           <Marginer direction="horizontal" margin="8em" />
           <ContentContainer>
@@ -428,12 +467,15 @@ class FormProfile extends Component {
             <LabelProfile>Confirm your password</LabelProfile>
             <Input placeholder="*******" type="password" />
             <Marginer direction="vertical" margin="4em" />
-            <SubmitButton type="button" onClick={this.handleSubmit}>Update Profile</SubmitButton>
+            <SubmitButton type="button" onClick={this.handleSubmit}>
+              Update Profile
+            </SubmitButton>
             <Marginer direction="vertical" margin="2.5em" />
-            <DeleteButton type="button" onClick={this.handleDelete}>Delete Profile</DeleteButton>
+            <DeleteButton type="button" onClick={this.handleDelete}>
+              Delete Profile
+            </DeleteButton>
           </ContentContainer>
         </FormContainer>
-        
       </BoxContainer>
     );
   }
