@@ -250,6 +250,8 @@ class FormProfile extends Component {
     } else {
       this.setState({ [evt.target.name]: evt.target.value });
     }
+    console.log("Language: " + this.state.languages);
+    console.log("Documents: " + this.state.documents);
   }
 
   profileImageHandler(evt) {
@@ -275,22 +277,22 @@ class FormProfile extends Component {
   };
 
   handleSubmit(evt) {
-    const updatedUser = {
+    let updatedUser = {
       _id: this.userData._id,
       first_name: this.state.first_name,
       last_name: this.state.last_name,
       email: this.state.email,
       dateOfBirth: this.state.dateOfBirth,
       // password: "",
-      profilePicture: this.state.profilePicture,
     };
     if (this.state.profileRole === "instructor") {
-      Object.assign(updateUser, {
+      Object.assign(updatedUser, {
         messages: this.state.messages,
         languages: this.state.languages,
         documents: this.state.documents,
       });
     }
+    console.log(updatedUser);
     this.props.updateUser(updatedUser, this.props.history);
   }
 
