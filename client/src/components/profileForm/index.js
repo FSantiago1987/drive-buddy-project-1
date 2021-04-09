@@ -4,10 +4,11 @@ import { deviceSize } from "../responsive";
 import { updateUser, deleteUser, logoutUser, uploadUserImage } from "../../actions/authActions";
 // from https://www.npmjs.com/package/react-custom-checkbox
 import { withRouter } from 'react-router-dom';
-import Checkbox from "react-custom-checkbox";
+/* import Checkbox from "react-custom-checkbox"; */
 import { connect } from "react-redux";
 import * as Icon from "react-icons/fi";
 import { Component } from "react";
+import Checkbox from './Checkbox'
 
 const BoxContainer = styled.div`
   width: 100%;
@@ -187,7 +188,7 @@ class FormProfile extends Component {
       last_name: last_name,
       email: email,
       dateOfBirth: dateOfBirth,
-      password: "",
+      password: password,
       profilePicture: profilePicture,
       profileRole: user_type,
       gender: gender,
@@ -198,7 +199,13 @@ class FormProfile extends Component {
         preview: picture,
         raw: ""
       },
-      pictureChanged: false
+      pictureChanged: false,
+      isCheckedEnglish: false,
+      isCheckedFrench: false,
+      isCheckedSpanish: false,
+      isCheckedDriverLicense: false,
+      isCheckedCarDocument: false,
+      isCheckedInstructorLicense: false
     };
     console.log(this.userData);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -206,13 +213,20 @@ class FormProfile extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.profileImageHandler = this.profileImageHandler.bind(this);
     this.handleUpload = this.handleUpload.bind(this);
+    this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
   }
 
   handleChange(evt){
-    this.setState({[evt.target.name]:evt.target.value});
+    if(evt.target.type === "checkbox"){
+      this.setState({ [evt.target.name]: evt.target.checked })
+    } else {
+      this.setState({[evt.target.name]:evt.target.value});
+    }
   }
 
-
+  handleCheckboxChange = evt => {
+      this.setState({ [evt.target.name]: evt.target.checked })
+  }
   profileImageHandler(evt){
     if(evt.target.files.length) {
       this.setState(prevState => ({
@@ -329,47 +343,35 @@ class FormProfile extends Component {
             <Marginer direction="vertical" margin="3em" />
             <LabelProfile>Languages</LabelProfile>
             <Marginer direction="vertical" margin="1em" />
-            <Checkbox
-              icon={<Icon.FiCheck color="#fff" size={20} />}
-              borderColor="#fff"
-              style={{ cursor: "pointer" }}
-              labelStyle={{
-                marginLeft: 5,
-                userSelect: "none",
-                color: "#fff",
-                fontSize: "13px",
-              }}
-              label="English"
-              onChange={this.handleChange}
-            />
+            <LabelResponseProfile>
+              <Checkbox
+                  name="isCheckedEnglish"
+                  value="English"
+                  checked={this.state.isCheckedEnglish}
+                  onChange={this.handleChange}
+                />
+                <span style={{ marginLeft: 8 }}>English</span>
+            </LabelResponseProfile>
             <Marginer direction="vertical" margin="1em" />
-            <Checkbox
-              icon={<Icon.FiCheck color="#fff" size={20} />}
-              borderColor="#fff"
-              style={{ cursor: "pointer" }}
-              labelStyle={{
-                marginLeft: 5,
-                userSelect: "none",
-                color: "#fff",
-                fontSize: "13px",
-              }}
-              label="French"
-              onChange={this.handleChange}
-            />
+            <LabelResponseProfile>
+              <Checkbox
+                  name="isCheckedFrench"
+                  value="French"
+                  checked={this.state.isCheckedFrench}
+                  onChange={this.handleChange}
+                />
+                <span style={{ marginLeft: 8 }}>French</span>
+            </LabelResponseProfile>
             <Marginer direction="vertical" margin="1em" />
-            <Checkbox
-              icon={<Icon.FiCheck color="#fff" size={20} />}
-              borderColor="#fff"
-              style={{ cursor: "pointer" }}
-              labelStyle={{
-                marginLeft: 5,
-                userSelect: "none",
-                color: "#fff",
-                fontSize: "13px",
-              }}
-              label="Spanish"
-              onChange={this.handleChange}
-            />
+            <LabelResponseProfile>
+              <Checkbox
+                  name="isCheckedSpanish"
+                  value="Spanish"
+                  checked={this.state.isCheckedSpanish}
+                  onChange={this.handleChange}
+                />
+                <span style={{ marginLeft: 8 }}>Spanish</span>
+            </LabelResponseProfile>                        
           </ContentContainer>
           <Marginer direction="horizontal" margin="8em" />
           <ContentContainer>
@@ -388,47 +390,35 @@ class FormProfile extends Component {
             <Marginer direction="vertical" margin="3em" />
             <LabelProfile>Instructors documents</LabelProfile>
             <Marginer direction="vertical" margin="1em" />
-            <Checkbox
-              icon={<Icon.FiCheck color="#fff" size={20} />}
-              borderColor="#fff"
-              style={{ cursor: "pointer" }}
-              labelStyle={{
-                marginLeft: 5,
-                userSelect: "none",
-                color: "#fff",
-                fontSize: "13px",
-              }}
-              label="Driver License"
-              onChange={this.handleChange}
-            />
+            <LabelResponseProfile>
+              <Checkbox
+                  name="isCheckedDriverLicense"
+                  value="Driver License"
+                  checked={this.state.isCheckedDriverLicense}
+                  onChange={this.handleChange}
+                />
+                <span style={{ marginLeft: 8 }}>Driver License</span>
+            </LabelResponseProfile>
             <Marginer direction="vertical" margin="1em" />
-            <Checkbox
-              icon={<Icon.FiCheck color="#fff" size={20} />}
-              borderColor="#fff"
-              style={{ cursor: "pointer" }}
-              labelStyle={{
-                marginLeft: 5,
-                userSelect: "none",
-                color: "#fff",
-                fontSize: "13px",
-              }}
-              label="Car's Document"
-              onChange={this.handleChange}
-            />
+            <LabelResponseProfile>
+              <Checkbox
+                  name="isCheckedCarDocument"
+                  value="Car Document"
+                  checked={this.state.isCheckedCarDocument}
+                  onChange={this.handleChange}
+                />
+                <span style={{ marginLeft: 8 }}>Car's Document</span>
+            </LabelResponseProfile>
             <Marginer direction="vertical" margin="1em" />
-            <Checkbox
-              icon={<Icon.FiCheck color="#fff" size={20} />}
-              borderColor="#fff"
-              style={{ cursor: "pointer" }}
-              labelStyle={{
-                marginLeft: 5,
-                userSelect: "none",
-                color: "#fff",
-                fontSize: "13px",
-              }}
-              label="Instructor License"
-              onChange={this.handleChange}
-            />
+            <LabelResponseProfile>
+              <Checkbox
+                  name="isCheckedInstructorLicense"
+                  value="Instructor License"
+                  checked={this.state.isCheckedInstructorLicense}
+                  onChange={this.handleChange}
+                />
+                <span style={{ marginLeft: 8 }}>Instructor License</span>
+            </LabelResponseProfile>  
           </ContentContainer>
           <Marginer direction="horizontal" margin="8em" />
           <ContentContainer>
