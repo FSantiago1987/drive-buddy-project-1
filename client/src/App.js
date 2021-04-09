@@ -1,19 +1,21 @@
-import logo from './logo.svg';
 import "./App.css";
-import React, { Component } from "react";
+import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
 import { Provider } from "react-redux";
 import store from "./store";
-import Navbar from "./components/layout/Navbar";
-import Landing from "./components/layout/Landing";
-import Register from "./components/auth/Register";
-import Login from "./components/auth/Login";
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import Dashboard from "./components/dashboard/Dashboard";
+import {Homepage} from "./containers/HomePage";
+import { CustomerAccessPage } from './containers/CustomerAccessPage';
+import Profile  from './containers/ProfilePage';
+import SearchInstructor from './containers/SearchInstructor';
+import RateInstructor from './containers/RateInstructor';
+import UsersList from './containers/UsersList';
 
+// Pull test
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -38,17 +40,20 @@ if (localStorage.jwtToken) {
 function App() {
   return (
     <Provider store={store}>
-        <Router>
           <div className="App">
-            <Navbar />
-            <Route exact path="/" component={Landing} />
-            <Route exact path="/register" component={Register} />
-            <Route exact path="/login" component={Login} />
-            <Switch>
-              <PrivateRoute exact path="/dashboard" component={Dashboard} />
-            </Switch>
+          <Router>
+              <Switch>
+                <Route exact path="/" component={Homepage} />
+                <Route path="/customer/access/:action" exact component={CustomerAccessPage} />
+                <PrivateRoute path="/profile" exact component={Profile} />
+                <Route path="/search_instructor" exact component={SearchInstructor} />
+                <PrivateRoute path="/rate_instructor" exact component={RateInstructor} />
+                <PrivateRoute path="/users_list" exact component={UsersList} />
+                {/* <Route exact path="/register" component={Register} />
+                <Route exact path="/login" component={Login} /> */}
+              </Switch>
+            </Router>
           </div>
-        </Router>
       </Provider>
   );
 }
