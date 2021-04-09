@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import Select from "react-select";
 import { registerUser } from "../../actions/authActions";
 import classnames from "classnames";
 import { withRouter } from 'react-router-dom';
@@ -11,25 +12,31 @@ class RegisterForm extends Component {
     constructor() {
         super();
         this.state = {
-            first_name: "",
-            last_name: "",
-            username: "",
-            email: "",
-            password: "",
-            password2: "",
-            phone: "",
-            address: "",
-            post_code: "",
-            city: "",
-            province: "",
-            user_type: "",
-            errors: {}
-        };
+          first_name: "",
+          last_name: "",
+          username: "",
+          email: "",
+          password: "",
+          password2: "",
+          phone: "",
+          address: "",
+          post_code: "",
+          city: "",
+          province: "",
+          user_type: "",
+          dateOfBirth: "",
+          profilePicture: "",
+          gender: "",
+          service_description: "",
+          languages: [],
+          documents: [],
+          errors: {}
+      };
       }
       componentDidMount() {
         // If logged in and user navigates to Register page, should redirect them to dashboard
         if (this.props.auth.isAuthenticated) {
-          this.props.history.push("/dashboard");
+          this.props.history.push("/profile");
         }
       }
       componentWillReceiveProps(nextProps) {
@@ -44,26 +51,45 @@ class RegisterForm extends Component {
       };
     onSubmit = e => {
         e.preventDefault();
-    const newUser = {
-            first_name: this.state.first_name,
-            last_name: this.state.last_name,
-            username: this.state.username,
-            email: this.state.email,
-            password: this.state.password,
-            password2: this.state.password2,
-            phone: this.state.phone,
-            address: this.state.address,
-            post_code: this.state.post_code,
-            city: this.state.city,
-            province: this.state.province,
-            user_type: this.state.user_type,
-        };
+        const newUser = this.state.user_type === 'instructor' ? {
+          first_name: this.state.first_name,
+          last_name: this.state.last_name,
+          username: this.state.username,
+          email: this.state.email,
+          password: this.state.password,
+          password2: this.state.password2,
+          phone: this.state.phone,
+          address: this.state.address,
+          post_code: this.state.post_code,
+          city: this.state.city,
+          province: this.state.province,
+          user_type: this.state.user_type,
+          dateOfBirth: this.state.dateOfBirth,
+          profilePicture: this.state.profilePicture,
+          gender: this.state.gender,
+          service_description: this.state.service_description,
+          languages: this.state.languages,
+          documents: this.state.documents,
+      } : {
+          first_name: this.state.first_name,
+          last_name: this.state.last_name,
+          username: this.state.username,
+          email: this.state.email,
+          password: this.state.password,
+          password2: this.state.password2,
+          phone: this.state.phone,
+          address: this.state.address,
+          post_code: this.state.post_code,
+          city: this.state.city,
+          province: this.state.province,
+          user_type: this.state.user_type
+      };
         this.props.registerUser(newUser, this.props.history); 
       };
     render() {
         const { errors } = this.state;
     return <BoxContainer>
-        <FormContainer>
+        <FormContainer noValidate onSubmit={this.onSubmit}>
             <Input 
                   onChange={this.onChange}
                   value={this.state.first_name}
@@ -186,22 +212,68 @@ class RegisterForm extends Component {
                     invalid: errors.post_code
                   })}
             /> 
-            <Input 
-                  onChange={this.onChange}
-                  value={this.state.user_type}
+            <Select 
+                  onChange={(e)=>{this.setState({user_type: e.value})}}
                   error={errors.user_type}
                   id="user_type"
                   type="text"
                   placeholder="User Type" 
+                  clearable={false}
+                  options={[
+                    { value: 'license', label: 'License Applicant' },
+                    { value: 'instructor', label: 'Instructor Applicant' }
+                  ]}
                   className={classnames("", {
                     invalid: errors.user_type
                   })}
-            />     
-        </FormContainer>
-        <Marginer direction="vertical" margin={10} />
-        <SubmitButton type="submit" onClick={this.onSubmit}>Sign-up</SubmitButton>
+             /> 
+             {this.state.user_type === "instructor" ? 
+             [
+             <Select 
+              onChange={(e)=>{this.setState({gender: e.value})}}
+              error={errors.gender}
+              id="gender"
+              type="text"
+              placeholder="Gender" 
+              clearable={false}
+              options={[
+                { value: 'Male', label: 'Male' },
+                { value: 'Female', label: 'Female' },
+                { value: 'Rather not say', label: 'Rather not say' },
+              ]}
+              className={classnames("", {
+                invalid: errors.gender
+              })}
+            /> ,
+            <Input
+              type="date"
+              onChange={this.onChange}
+              value={this.state.dateOfBirth}
+              error={errors.dateOfBirth}
+              id="dateOfBirth"
+              placeholder="Date of birth" 
+              className={classnames("", {
+                invalid: errors.dateOfBirth
+              })}
+            />,
+            <Input 
+              onChange={this.onChange}
+              value={this.state.service_description}
+              error={errors.service_description}
+              id="service_description"
+              type="text"
+              placeholder="Service Description" 
+              className={classnames("", {
+                invalid: errors.service_description
+              })}
+            /> 
+    ]
+             : null}
+        <Marginer direction="vertical" margin={20} />
+        <SubmitButton type="submit">Sign-up</SubmitButton>
         <Marginer direction="vertical" margin="1em" />
         <MutedLink href="#">Already have an account? <BoldLink href="/customer/access/signin">Sign-in</BoldLink></MutedLink>
+        </FormContainer>
     </BoxContainer>
     }
 }

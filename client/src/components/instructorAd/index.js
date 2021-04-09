@@ -75,6 +75,12 @@ const StandoutImage = styled.div`
     }
 `;
 
+const AchorLink = styled.a`
+    text-decoration: none;
+    outline: none;
+    transition: all 200ms ease-in-out;
+`;
+
 export function InstructorAd(props){
     const isMobile = useMediaQuery({maxWidth: deviceSize.mobile});
     return <InstructorAdContainer>
@@ -86,7 +92,9 @@ export function InstructorAd(props){
                 <Slogan>and you have an outstanding</Slogan>
                 <Slogan>service to offer?</Slogan>
                 <Marginer direction="vertical" margin={10} />
-                <Button size={isMobile ? 12 : 16}>Join as Instructor</Button>
+                <AchorLink href="/customer/access/signup">
+                    <Button size={isMobile ? 12 : 16}>Join as Instructor</Button>
+                </AchorLink>
             </SloganContainer>
             <StandoutImage>
                 <img src={intructorAd} alt="join-as-instructor" />

@@ -88,17 +88,29 @@ const StartingAtText = styled.h6`
 `;
 
 export function InstructorCard(props){
-    const {thumbnailUrl, instructor, title, id, rating, rate} = props;
+    const {first_name, last_name, profilePicture, service_description} = props;
+    const name = first_name+" "+last_name;
+    let picture = profilePicture;
+    if(profilePicture && typeof profilePicture !== 'string'){
+        picture = `data:image/png;base64,${profilePicture.buffer.toString('base64')}`
+    }else{
+        picture = "https://www.vippng.com/png/detail/363-3631798_profile-placeholder-woman-720-profile-image-placeholder-png.png";
+    }
+    const min = Math.ceil(0);
+    const max = Math.floor(5);
+    const rating  = Math.floor(Math.random() * (max - min + 1)) + min;
+    const rate = 0;
+
     return <CardContainer>
         <TopContainer>
             <InstructorThumbnail>
-                <img src={thumbnailUrl} alt={title}/>
+                <img src={picture} alt={name}/>
             </InstructorThumbnail>
         </TopContainer>
         <ContentContainer>
-            <Title>{title}</Title>
+            <Title>{name}</Title>
             <Marginer direction="vertical" margin={12} />
-            <InstructorName>{instructor.fullName}</InstructorName>
+            <InstructorName>{service_description}</InstructorName>
         </ContentContainer>
         <BottomContainer>
             <RatingContainer>
