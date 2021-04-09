@@ -27,6 +27,7 @@ const LogoTitle = styled.h2`
     font-weight: 1000;
     font-size: ${({ size }) => size ? size + "px" : "20px" };
     color: ${({ color }) => color ? color : "#fff" };
+    margin: 0;
 `;
 
 const footerTitle = styled.h6`

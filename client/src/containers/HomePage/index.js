@@ -29,6 +29,9 @@ export function Homepage(props){
             <Navbar useTransparent />
         </TopSection>
         <InnerPageContainer>
+             <ContentContainer>
+                <Instructors />
+            </ContentContainer>
             <InstructorAd />
         </InnerPageContainer>
         <Footer />

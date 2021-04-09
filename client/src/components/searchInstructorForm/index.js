@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye } from '@fortawesome/free-solid-svg-icons';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { faPhoneAlt } from '@fortawesome/free-solid-svg-icons';
+import "./stylesSearch.css"
 
 
 // import Box from '@material-ui/core/Box';
@@ -20,6 +21,7 @@ const BoxContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
+  padding-right: 100px;
 `;
 
 const FormContainer = styled.form`
@@ -28,9 +30,9 @@ const FormContainer = styled.form`
 `;
 
 const Input = styled.input`
-  padding: 0.2rem !important;
+  padding: 6px !important;
   width: 200px !important;
-  height: 30px;
+  height: 25px !important;
   border-radius: 0.3rem !important;
   color: ${(props) => props.inputColor || "palevioletred"};
   background: #fff !important;
@@ -110,10 +112,10 @@ const PictureBox = styled.div`
 `;
 
 const ContentContainer = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  width: 180px;
   &:not(:last-of-type) {
     margin-right: 8%;
   }
@@ -121,6 +123,12 @@ const ContentContainer = styled.div`
     margin-right: 0;
     width: 100%;
   }
+`;
+
+const selectInstructor = styled(Select)`
+    position: relative;
+    box-sizing: border-box;
+    width: 100px;
 `;
 
 const users = [
@@ -140,9 +148,7 @@ function InstructorTable() {
           <tr>
             <th>Name</th>
             <th>Gender</th>
-            <th>Email</th>
             <th>Language</th>
-            <th>Phone <FontAwesomeIcon icon={faPhoneAlt}/></th>
             <th>Rating <FontAwesomeIcon icon={faStar} /></th>
             <th>Details</th>
           </tr>
@@ -152,9 +158,7 @@ function InstructorTable() {
             <tr>
               <td key={{ idx }}>{user.name}</td>
               <td key={{ idx }}>{user.gender}</td>
-              <td key={{ idx }}>{user.email}</td>
               <td key={{ idx }}>{user.language}</td>
-              <td key={{ idx }}>{user.phone}</td>
               <td key={{ idx }}>{user.rating}</td>
               <td key={{ idx }}><FontAwesomeIcon icon={faEye} /></td>
             </tr>
@@ -222,7 +226,7 @@ class FormSearchInstructor extends Component {
                 onChange={this.handleChange}
               />
             </ContentContainer>
-            <Marginer direction="horizontal" margin="8em" />
+            <Marginer direction="horizontal" margin="1em" />
             <ContentContainer>
               <Label>Gender</Label>
               <Select
@@ -231,6 +235,7 @@ class FormSearchInstructor extends Component {
                 id="gender"
                 type="text"
                 placeholder="Gender"
+                isSearchable={false}
                 clearable={false}
                 options={[
                   { value: 'Male', label: 'Male' },
@@ -242,7 +247,7 @@ class FormSearchInstructor extends Component {
                 })}
               />
             </ContentContainer>
-            <Marginer direction="horizontal" margin="8em" />
+            <Marginer direction="horizontal" margin="1em" />
             <ContentContainer>
               <Label>Language</Label>
               <Select
@@ -251,6 +256,7 @@ class FormSearchInstructor extends Component {
                 id="language"
                 type="text"
                 placeholder="Language"
+                isSearchable={false}
                 clearable={false}
                 options={[
                   { value: '1', label: 'English' },
@@ -262,7 +268,7 @@ class FormSearchInstructor extends Component {
                 })}
               />
             </ContentContainer>
-            <Marginer direction="horizontal" margin="8em" />
+            <Marginer direction="horizontal" margin="1em" />
             <ContentContainer>
               <Label>Rate</Label>
               <Select
@@ -271,6 +277,7 @@ class FormSearchInstructor extends Component {
                 id="rate"
                 type="text"
                 placeholder="Rate"
+                isSearchable={false}
                 clearable={false}
                 options={[
                   { value: '1', label: 'Above 1' },
@@ -284,7 +291,7 @@ class FormSearchInstructor extends Component {
                 })}
               />
             </ContentContainer>
-            <Marginer direction="horizontal" margin="8em" />
+            <Marginer direction="horizontal" margin="1em" />
             <ContentContainer>
               <Marginer direction="vertical" margin="2.5em" />
               <SubmitButton>Search</SubmitButton>

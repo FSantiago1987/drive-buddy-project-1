@@ -69,24 +69,27 @@ const HeaderContainer = styled.div`
 `;
 
 const HeaderText = styled.h2`
+    font-family: Noto Sans SC;
+    font-weight: 100;
     font-size: 30px;
     font-weight: 600;
     line-height: 1.24;
     align-items: flex-start;
     color: #fff;
     z-index: 10;
-    font-family: 'Poppins', cursive;
     margin: 0;
 `;
 
 const SmallText = styled.h5`
+    font-family: Noto Sans SC;
+    font-weight: 100;
     color: #fff;
     font-weight: 500;
     font-size: 11px;
     z-index: 10;
     margin: 0;
-    margin-top: 8px;
-    font-family: 'Poppins', cursive;
+    margin-top: 20px;
+    margin-bottom: 40px;
 `;
 
 const InnerContainer = styled.div`
