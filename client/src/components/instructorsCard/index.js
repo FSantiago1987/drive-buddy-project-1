@@ -3,6 +3,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react'
 import styled from 'styled-components'
 import { Marginer } from '../marginer';
+import driver1 from '../../images/thumbnails/teddriver.jpg';
+import driver2 from '../../images/thumbnails/driver2.jpg';
+import driver3 from '../../images/thumbnails/toretto.jpg';
+import driver4 from '../../images/thumbnails/phoebe.jpg';
 
 const CardContainer = styled.div`
     display: flex;
@@ -88,29 +92,19 @@ const StartingAtText = styled.h6`
 `;
 
 export function InstructorCard(props){
-    const {first_name, last_name, profilePicture, service_description} = props;
-    const name = first_name+" "+last_name;
-    let picture = profilePicture;
-    if(profilePicture && typeof profilePicture !== 'string'){
-        picture = `data:image/png;base64,${profilePicture.buffer.toString('base64')}`
-    }else{
-        picture = "https://www.vippng.com/png/detail/363-3631798_profile-placeholder-woman-720-profile-image-placeholder-png.png";
-    }
-    const min = Math.ceil(0);
-    const max = Math.floor(5);
-    const rating  = Math.floor(Math.random() * (max - min + 1)) + min;
-    const rate = 0;
+    const {id, title, rating, rate, name} = props;
+    const images = [driver1, driver2, driver3, driver4]
 
     return <CardContainer>
         <TopContainer>
             <InstructorThumbnail>
-                <img src={picture} alt={name}/>
+                <img src={images[id-1]} alt={name}/>
             </InstructorThumbnail>
         </TopContainer>
         <ContentContainer>
-            <Title>{name}</Title>
+            <Title>{title}</Title>
             <Marginer direction="vertical" margin={12} />
-            <InstructorName>{service_description}</InstructorName>
+            <InstructorName>{name}</InstructorName>
         </ContentContainer>
         <BottomContainer>
             <RatingContainer>

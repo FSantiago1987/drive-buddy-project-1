@@ -3,6 +3,8 @@ import styled from 'styled-components';
 
 
 import logoImg from "../../images/logoDriveBuddy.png"
+import logoImgFooter from "../../images/logoDriveBuddy.png"
+
 import { Marginer } from '../marginer';
 
 const BrandLogoContainer = styled.div`
@@ -20,12 +22,19 @@ const LogoImage = styled.div`
     }
 `;
 
-
 const LogoTitle = styled.h2`
-    margin: 0;
-    font-family: 'Berkshire Swash', cursive;
+    font-family: Noto Sans SC;
+    font-weight: 1000;
     font-size: ${({ size }) => size ? size + "px" : "20px" };
     color: ${({ color }) => color ? color : "#fff" };
+    margin: 0;
+`;
+
+const footerTitle = styled.h6`
+    color: #a3a3a3; 
+    font-size: 11px;
+    margin-left: 10px;
+    font-weight: 400;
 `;
 
 const GradientTitle = styled.div`
@@ -43,7 +52,7 @@ const GradientTitle = styled.div`
 
 
 export function BrandLogo(props){
-    const { logoSize, textSize, color, hideLogo, doNotUseGradient, image, hideTitle } = props;
+    const { logoSize, textSize, color, hideLogo, fLogo, doNotUseGradient, findGradient, beGradient, footerGradient, image, hideTitle } = props;
     return <BrandLogoContainer>
         {!hideLogo && 
             <LogoImage size={logoSize}>
@@ -53,13 +62,21 @@ export function BrandLogo(props){
         {!hideLogo && 
             <Marginer direction="horizontal" margin={4} />
         }
-        {!doNotUseGradient && !hideTitle &&
-            <GradientTitle>
-                <LogoTitle size={textSize} color={color}>Drive Buddy</LogoTitle>
-            </GradientTitle>
-        }
+        
         {doNotUseGradient && !hideTitle &&
             <LogoTitle size={textSize} color={color}>Drive Buddy</LogoTitle>
+        }
+
+        {beGradient && !hideTitle &&
+            <LogoTitle size={textSize} color={color}>Become a Buddy</LogoTitle>
+        }
+
+        {findGradient && !hideTitle &&
+            <LogoTitle size={textSize} color={color}>Find a Buddy</LogoTitle>
+        }
+
+        {footerGradient && !hideTitle &&
+            <footerTitle size={textSize} color={color}>Drive Buddy</footerTitle>
         }
     </BrandLogoContainer>
 }

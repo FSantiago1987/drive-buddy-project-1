@@ -4,18 +4,15 @@ import styled from 'styled-components';
 import { BrandLogo } from '../brandLogo';
 import { Marginer } from '../marginer';
 import { faFacebook, faTwitter } from "@fortawesome/free-brands-svg-icons";
-import footerLogo from "../../images/footerLogo.png";
+import footerLogo from "../../images/driveBuddy.png";
 import { deviceSize } from '../responsive';
 import { useMediaQuery } from 'react-responsive';
 
 const FooterContainer = styled.div`
+    font-family: Noto Sans SC;
     width: 100%;
-    min-height: 270px;
     display: flex;
     flex-direction: column;
-    padding: 2em 3em;
-    padding-bottom: 0;
-    border-top: 0.6px solid rgba(0, 0, 0, 0.3);
 
     @media screen and (max-width: ${deviceSize.mobile}px) {
         border-top: 0;
@@ -49,12 +46,14 @@ const ContentContainer = styled.div`
 `;
 
 const BottomContainer = styled.div`
+    font-size: 11px;
+    color: #a3a3a3;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 70px;
+    height: 50px;
     border-top: 0.6px solid rgba(0, 0, 0, 0.3);
-    padding: 0 10px;
+    padding: 0 100px;
 
     @media screen and (max-width: ${deviceSize.mobile}px) {
         height: 20px;
@@ -76,7 +75,7 @@ const Title = styled.h2`
     margin-bottom: 13px;
     color: #000;
     font-weight: 600;
-    font-size: 17px;
+    font-size: 16.5px;
 
     @media screen and (max-width: ${deviceSize.mobile}px) {
         font-size: 13px;
@@ -87,7 +86,7 @@ const FooterLink = styled.a`
     text-decoration: none;
     color: #8a8a8a;
     font-weight: 500;
-    font-size: 15px;
+    font-size: 14.3px;
     cursor: pointer;
     transition: background-color, 200ms ease-in-out;
     
@@ -171,11 +170,11 @@ export function Footer(props){
                     </RightContainer>                     
                 </TopContainer>
             )}
-        {!isMobile && (<Marginer direction="vertical" margin={25} />)}
+        {!isMobile && (<Marginer direction="vertical" margin={0} />)}
         <BottomContainer>
             <LeftContainer>
-                <BrandLogo color="#8a8a8a" textSize={isMobile ? 10 : 24} hideLogo doNotUseGradient />
-                <PrivacyText> &#169; All Rights Reserved. 2021</PrivacyText>
+                <BrandLogo color="#8a8a8a" textSize={isMobile ? 6 : 12} hideLogo footerGradient />
+                <PrivacyText>&#169;2021 All Rights Reserved.</PrivacyText>
             </LeftContainer>
             <RightContainer>
                 <SocialIcon>

@@ -9,6 +9,14 @@ import { Button } from '../../components/button';
 import { useMediaQuery } from 'react-responsive';
 import { deviceSize } from '../../components/responsive';
 
+import WebFont from 'webfontloader';
+
+WebFont.load({
+    google: {
+      families: ['Noto Sans SC']
+    }
+  });
+
 const TopSectionContainer = styled.div`
     width: 100%;
     height: 700px;
@@ -42,7 +50,6 @@ const TopSectionInnerContainer = styled.div`
     }
 `;
 
-
 const StandoutImg = styled.div`
     width: 65em;
     height: 43em;
@@ -54,14 +61,11 @@ const StandoutImg = styled.div`
     }
 `;
 
-
 const LogoContainer = styled.div`
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     min-width: 400px;
     flex-direction: column;
-    margin-left: 10%;
-    margin-top: 5%;
 
     @media screen and (max-width: ${deviceSize.mobile}px) {
         justify-content: center;
@@ -72,10 +76,11 @@ const LogoContainer = styled.div`
 `;
 
 const SloganText = styled.h3`
+    font-family: Noto Sans SC;
+    font-weight: 100;
     margin: 0;
     line-height: 1.4;
     color: #fff;
-    font-weight: 400;
     font-size: 22px;
     justify-content: flex-start;
 
@@ -101,7 +106,7 @@ export function TopSection(props){
             {children}
             <TopSectionInnerContainer>
                 <LogoContainer>
-                    <BrandLogo logoSize={isMobile ? 50 : 70} textSize={isMobile ? 40 : 47} doNotUseGradient />
+                    <BrandLogo logoSize={isMobile ? 50 : 70} textSize={isMobile ? 40 : 47} hideLogo findGradient />
                     <Marginer margin={8} direction="vertical" />
                     <SloganText>Find the right driving instructor</SloganText>
                     <SloganText>And get your Driving License</SloganText>
@@ -110,11 +115,6 @@ export function TopSection(props){
                         <Button>Join Now</Button>
                     </AchorLink>
                 </LogoContainer>
-                {!isMobile && (
-                    <StandoutImg>
-                        <img src={BestIntructorsImg} alt="DriveBuddy" />
-                    </StandoutImg>
-                )}
             </TopSectionInnerContainer>
         </BackgroundFilter>
     </TopSectionContainer>

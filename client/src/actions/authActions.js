@@ -37,11 +37,16 @@ export const updateUser = (userData, history) => dispatch => {
       })
     );
 };
-export const deleteUser = (userData, history) => dispatch => {
+export const deleteUser = (userData, history = null, httpItems = null) => dispatch => {
   axios
     .post("/api/users/delete", userData)
     .then(res => {
-      history.push("/");
+      if(history){
+        history.push("/");
+      }
+      if(httpItems){
+        httpItems();
+      }
       alert('Account deleted')
     }) // re-direct to home page on successful delete
     .catch(err =>

@@ -2,12 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 
 const ButtonWrapper = styled.button`
+    font-family: Noto Sans SC;
+    font-weight: 600;
+    padding: 10px 50px 15px 50px;
     border: none;
     outline: none;
     color: #fff;
-    padding: 6px 1em;
-    font-size: ${({ size }) => size ? size + "px" : "17px"};
-    font-weight: 600;
+    font-size: ${({ size }) => size ? size + "px" : "30px"};
     border-radius: 3px;
     background-color: ${({ color }) => color ? color : "#2a9d8f"};
     cursor: pointer;

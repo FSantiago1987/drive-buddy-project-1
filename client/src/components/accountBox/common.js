@@ -13,8 +13,7 @@ export const FormContainer = styled.form`
     width: 100%;
     display: flex;
     flex-direction: column;
-    box-shadow: 0px 0px 2.5px rgba(15, 15, 15, 0.19);
-`;
+`; //box-shadow: 0px 0px 2.5px rgba(15, 15, 15, 0.19);
 
 export const MutedLink = styled.a`
     font-size: 12px;
@@ -58,7 +57,8 @@ export const Input = styled.input`
 
 export const SelectStyled = styled(Select)`
     width: 100%;
-    height: 30px!important;
+    height: 30px !important;
+    min-width: 200px;
     outline: none;
     padding: 0px 0px;
     transition: all 200ms ease-in-out;
@@ -70,19 +70,22 @@ export const SelectStyled = styled(Select)`
 `;
 
 export const SubmitButton = styled.button`
-    width: 100%;
-    padding: 11px 20%;
-    color: #fff;
-    font-size: 15px;
-    font-weight: 600;
-    border: none;
-    border-radius: 100px 100px 100px 100px;
-    cursor: pointer;
-    transition: all, 240ms ease-in-out;
-    background: rgb(0,212,255);
-    background: linear-gradient(90deg, rgba(0,212,255,1) 0%, rgba(1,163,164,1) 30%, rgba(2,0,36,1) 100%);
+color: #fff;
+font-size: 19.5px;
+font-weight: 600;
+border: none;
+border-radius: 3px;
+width: 100%;
+padding: 11px 20%;
+background-color: ${({ color }) => color ? color : "#2a9d8f"};
+cursor: pointer;
+transition: all 200ms ease-in-out;
 
-    &:hover{
-        filter: brightness(1.03);
-    }
+&:hover {
+    background-color: #21867a;
+}
+
+&:focus {
+    outline: none;
+}
 `;
