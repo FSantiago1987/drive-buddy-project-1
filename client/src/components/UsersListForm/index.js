@@ -2,16 +2,22 @@ import styled from "styled-components";
 import { Marginer } from "../marginer";
 import { deviceSize } from "../responsive";
 import React, { Component } from "react";
-import TableContainer from '@material-ui/core/TableContainer';
-import Paper from '@material-ui/core/Paper';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye } from '@fortawesome/free-solid-svg-icons';
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-
+import axios from "axios";
+import TableContainer from '@material-ui/core/TableContainer';
+import Paper from '@material-ui/core/Paper';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import TrashIcon from '@material-ui/icons/Delete';
+import { deleteUser } from "../../actions/authActions";
+import { connect } from "react-redux";
 
 const BoxContainer = styled.div`
   width: 100%;
@@ -120,44 +126,6 @@ const ContentContainer = styled.div`
   }
 `;
 
-const users = [
-  { name: 'Name 1', role: 'License Applicant', userStatus: 'Approved', email: 'a@a.com'},
-  { name: 'Name 2', role: 'Instructor', userStatus: 'Approved', email: 'a@a.com'},
-  { name: 'Name 3', role: 'Instructor Applicant', userStatus: 'Waiting', email: 'a@a.com'},
-];
-
-function InstructorTable() {
-
-  return (
-    <TableContainer component={Paper}>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Role</th>
-            <th>User Status</th>
-            <th>Email</th>
-            <th>View Profile</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user, idx) => (
-            <tr>
-              <td key={{ idx }}>{user.name}</td>
-              <td key={{ idx }}>{user.role}</td>
-              <td key={{ idx }}>{user.userStatus}</td>
-              <td key={{ idx }}>{user.email}</td>
-              <td key={{ idx }}><FontAwesomeIcon icon={faEye}/></td>
-              <td key={{ idx }}><FontAwesomeIcon icon={faTrashAlt}/></td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </TableContainer>
-  );
-}
-
 class FormSearchInstructor extends Component {
   constructor(props) {
     super(props);
@@ -166,14 +134,66 @@ class FormSearchInstructor extends Component {
       role: "",
       userStatus: "",
       email: "",
-      errors: {}
+      errors: {},
+      items: [],
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.httpItems = this.httpItems.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+  }
+
+  componentDidMount(){
+    this.httpItems();
+  }
+
+  httpItems(){
+    axios.get("/api/users/")
+    .then(res => {
+      if(res.status === 200){
+        this.setState({items: res.data});
+      }
+    }) 
+    .catch(err =>{}
+    );
   }
 
   handleChange(evt) {
     this.setState({ [evt.target.name]: evt.target.value });
+  }
+
+  handleDelete(id) {
+    this.props.deleteUser({ _id: id },null,this.httpItems);
+  }
+
+  usersTable(users) {
+
+    return (
+      <TableContainer component={Paper}>
+      <Table aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Name</TableCell>
+            <TableCell>Role</TableCell>
+            <TableCell>Email</TableCell>
+            <TableCell>View Profile</TableCell>
+            <TableCell>Delete</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {users.map((user) => (
+            <TableRow key={user.first_name}>
+              <TableCell>{user.first_name+" "+user.last_name}</TableCell>
+              <TableCell>{user.user_type}</TableCell>
+              <TableCell>{user.email}</TableCell>
+              <TableCell><VisibilityIcon/></TableCell>
+              <TableCell onClick={()=>{this.handleDelete(user._id)}}><TrashIcon/></TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+    );
   }
 
   handleSubmit(evt) {
@@ -241,11 +261,18 @@ class FormSearchInstructor extends Component {
           <TableContainer>
             <br></br>
             <br></br>
-            {InstructorTable()}
+            {this.usersTable(this.state.items)}
           </TableContainer>
         </BoxContainer>
       </div>
     );
   }
 }
-export default FormSearchInstructor;
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors
+});
+export default connect(
+  mapStateToProps,
+  { deleteUser }
+)(FormSearchInstructor);

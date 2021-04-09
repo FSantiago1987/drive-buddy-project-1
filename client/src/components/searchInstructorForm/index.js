@@ -6,16 +6,15 @@ import Select from "react-select";
 import classnames from "classnames";
 import TableContainer from '@material-ui/core/TableContainer';
 import Paper from '@material-ui/core/Paper';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye } from '@fortawesome/free-solid-svg-icons';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
-import { faPhoneAlt } from '@fortawesome/free-solid-svg-icons';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import Rating from '@material-ui/lab/Rating';
 import "./stylesSearch.css"
-
-
-// import Box from '@material-ui/core/Box';
-// import Typography from '@material-ui/core/Typography';
-// import Rating from '@material-ui/lab/Rating';
+import axios from "axios";
 
 const BoxContainer = styled.div`
   width: 100%;
@@ -131,44 +130,6 @@ const selectInstructor = styled(Select)`
     width: 100px;
 `;
 
-const users = [
-  { name: 'Name 1', gender: 'female', email: 'a@a.com', language: 'English', phone: '435-455-6789', rating: '5' },
-  { name: 'Name 2', gender: 'male', email: 'a@a.com', language: 'English', phone: '435-455-6789', rating: '4.3' },
-  { name: 'Name 3', gender: 'male', email: 'a@a.com', language: 'English', phone: '435-455-6789', rating: '4.9' },
-];
-
-
-
-function InstructorTable() {
-
-  return (
-    <TableContainer component={Paper}>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Gender</th>
-            <th>Language</th>
-            <th>Rating <FontAwesomeIcon icon={faStar} /></th>
-            <th>Details</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user, idx) => (
-            <tr>
-              <td key={{ idx }}>{user.name}</td>
-              <td key={{ idx }}>{user.gender}</td>
-              <td key={{ idx }}>{user.language}</td>
-              <td key={{ idx }}>{user.rating}</td>
-              <td key={{ idx }}><FontAwesomeIcon icon={faEye} /></td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </TableContainer>
-  );
-}
-
 // function CustomizedRating() {
 //   console.log('aaaaaaaaaaaaaaaaaa' + value)
 //   const [value, setValue] = React.useState(2);
@@ -194,14 +155,64 @@ class FormSearchInstructor extends Component {
       gender: "",
       language: "",
       rate: "",
-      errors: {}
+      errors: {},
+      items: [],
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.httpItems = this.httpItems.bind(this);
+    
+  }
+
+  componentDidMount(){
+    this.httpItems();
+  }
+
+  httpItems(){
+    axios.get("/api/users/instructors")
+    .then(res => {
+      if(res.status === 200){
+        this.setState({items: res.data});
+      }
+    }) 
+    .catch(err =>{}
+    );
   }
 
   handleChange(evt) {
     this.setState({ [evt.target.name]: evt.target.value });
+  }
+
+  instructorTable(users) {
+
+    return (
+      <TableContainer component={Paper}>
+      <Table aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Name</TableCell>
+            <TableCell>Gender</TableCell>
+            <TableCell>Phone</TableCell>
+            <TableCell>Email</TableCell>
+            <TableCell>Rating</TableCell>
+            <TableCell>Details</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {users.map((user) => (
+            <TableRow key={user.first_name}>
+              <TableCell>{user.first_name+" "+user.last_name}</TableCell>
+              <TableCell>{user.gender}</TableCell>
+              <TableCell>{user.phone}</TableCell>
+              <TableCell>{user.email}</TableCell>
+              <TableCell><Rating value={5} readOnly /></TableCell>
+              <TableCell><VisibilityIcon/></TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+    );
   }
 
   handleSubmit(evt) {
@@ -302,11 +313,12 @@ class FormSearchInstructor extends Component {
           <TableContainer>
             <br></br>
             <br></br>
-            {InstructorTable()}
+            {this.instructorTable(this.state.items)}
           </TableContainer>
         </BoxContainer>
       </div>
     );
   }
 }
+
 export default FormSearchInstructor;
