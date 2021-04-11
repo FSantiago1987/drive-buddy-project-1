@@ -97,8 +97,7 @@ const InnerContainer = styled.div`
     display: flex;
     flex-direction: column;
     padding: 01.8em;
-`;//padding-left: 40px;
-//padding-right: 40px;
+`;
 
 const backDropVariants = {
     expanded: {

@@ -101,12 +101,13 @@ const MessageText = styled.p`
 
 export function TopProfile(props){
     const { children } = props;
+    const userData = JSON.parse(localStorage.userData);
     return <TopSectionContainer>
         <BackgroundFilter>
             {children}
             <TopSectionInnerContainer>
                 <ProfileContainer>
-                    <TitleText>Welcome, first_name</TitleText>
+                    <TitleText>Welcome, {userData.first_name}</TitleText>
                     <Marginer direction="vertical" margin="2em" />
                     <MessageIcon>
                         <FontAwesomeIcon icon={faEnvelope} />

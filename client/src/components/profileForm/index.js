@@ -2,9 +2,7 @@ import styled from "styled-components";
 import { Marginer } from "../marginer";
 import { deviceSize } from "../responsive";
 import { updateUser, deleteUser, logoutUser, uploadUserImage } from "../../actions/authActions";
-// from https://www.npmjs.com/package/react-custom-checkbox
 import { withRouter } from 'react-router-dom';
-/* import Checkbox from "react-custom-checkbox"; */
 import { connect } from "react-redux";
 import * as Icon from "react-icons/fi";
 import { Component } from "react";
@@ -424,8 +422,8 @@ class FormProfile extends Component {
               {this.state.gender !== "" ? this.state.gender : "Rather not say"}
             </LabelResponseProfile>
             <Marginer direction="vertical" margin="3em" />
-            <LabelProfile>Instructors documents</LabelProfile>
-            <Marginer direction="vertical" margin="1em" />
+            { this.userData.user_type === "instructor" ? [<LabelProfile>Instructors documents</LabelProfile>,
+            <Marginer direction="vertical" margin="1em" />,
             <LabelResponseProfile>
               <Checkbox
                 name="isCheckedDriverLicense"
@@ -435,8 +433,8 @@ class FormProfile extends Component {
                 onChange={this.handleChange}
               />
               <span style={{ marginLeft: 8 }}>Driver License</span>
-            </LabelResponseProfile>
-            <Marginer direction="vertical" margin="1em" />
+            </LabelResponseProfile>,
+            <Marginer direction="vertical" margin="1em" />,
             <LabelResponseProfile>
               <Checkbox
                 name="isCheckedCarDocument"
@@ -446,8 +444,8 @@ class FormProfile extends Component {
                 onChange={this.handleChange}
               />
               <span style={{ marginLeft: 8 }}>Car's Document</span>
-            </LabelResponseProfile>
-            <Marginer direction="vertical" margin="1em" />
+            </LabelResponseProfile>,
+            <Marginer direction="vertical" margin="1em" />,
             <LabelResponseProfile>
               <Checkbox
                 name="isCheckedInstructorLicense"
@@ -457,7 +455,7 @@ class FormProfile extends Component {
                 onChange={this.handleChange}
               />
               <span style={{ marginLeft: 8 }}>Instructor License</span>
-            </LabelResponseProfile>
+            </LabelResponseProfile>] : null}
           </ContentContainer>
           <Marginer direction="horizontal" margin="8em" />
           <ContentContainer>
@@ -468,7 +466,7 @@ class FormProfile extends Component {
             <Input placeholder="*******" type="password" />
             <Marginer direction="vertical" margin="4em" />
             <SubmitButton type="button" onClick={this.handleSubmit}>
-              Update Profile
+              View Booking History
             </SubmitButton>
             <Marginer direction="vertical" margin="2.5em" />
             <DeleteButton type="button" onClick={this.handleDelete}>
