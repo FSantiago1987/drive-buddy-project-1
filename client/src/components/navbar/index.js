@@ -12,6 +12,8 @@ import { logoutUser } from "../../actions/authActions";
 
 
 const NavbarContainer = styled.div`
+    font-family: Noto Sans SC;
+    font-weight: 100;
     width: 100%;
     height: 65px;
     display: flex;
@@ -31,7 +33,7 @@ const AccessibilityContainer = styled.div`
 `;
 
 const AchorLink = styled.a`
-    font-size: 12px;
+    font-size: 15px;
     color: #fff;
     text-decoration: none;
     cursor: pointer;
@@ -43,7 +45,9 @@ const AchorLink = styled.a`
 `;
 
 const WelcomeMessage = styled.p`
-    font-size: 12px;
+    font-family: Noto Sans SC;
+    font-weight: 100;
+    font-size: 15px;
     color: #fff;
     text-decoration: none;
     outline: none;
@@ -78,6 +82,28 @@ const LogoutButton = styled.button`
     }
 `;
 
+const ButtonNav = styled.button`
+    font-family: Noto Sans SC;
+    font-weight: 100;
+    padding: 5px 10px 7px 10px;
+    border: none;
+    outline: none;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 3px;
+    background-color: ${({ color }) => color ? color : "#2a9d8f"};
+    cursor: pointer;
+    transition: all 200ms ease-in-out;
+
+    &:hover {
+        background-color: #21867a;
+    }
+
+    &:focus {
+        outline: none;
+    }
+`;
+
 
 class Navbar extends Component {
     onLogoutClick = e => {
@@ -95,7 +121,7 @@ class Navbar extends Component {
                 </LinkLogo>
                 <AccessibilityContainer>
                     {username && (
-                        <WelcomeMessage>Welcome, {username} </WelcomeMessage>
+                        <WelcomeMessage> {username} </WelcomeMessage>
                     )}
                     {username && (
                         <Marginer direction="horizontal" margin={10} />
@@ -137,7 +163,7 @@ class Navbar extends Component {
                     )}
                     {!username && (
                         <AchorLink href="/customer/access/signup" initialActive='signup'>
-                            <Button size={11}>Register</Button>
+                            <ButtonNav size={13}>Register</ButtonNav>
                         </AchorLink>
                     )}
                     {!username && (

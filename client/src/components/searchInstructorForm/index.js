@@ -6,20 +6,21 @@ import Select from "react-select";
 import classnames from "classnames";
 import TableContainer from '@material-ui/core/TableContainer';
 import Paper from '@material-ui/core/Paper';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye } from '@fortawesome/free-solid-svg-icons';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
-import { faPhoneAlt } from '@fortawesome/free-solid-svg-icons';
-
-
-// import Box from '@material-ui/core/Box';
-// import Typography from '@material-ui/core/Typography';
-// import Rating from '@material-ui/lab/Rating';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import Rating from '@material-ui/lab/Rating';
+import "./stylesSearch.css"
+import axios from "axios";
 
 const BoxContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
+  padding-right: 100px;
 `;
 
 const FormContainer = styled.form`
@@ -28,9 +29,9 @@ const FormContainer = styled.form`
 `;
 
 const Input = styled.input`
-  padding: 0.2rem !important;
+  padding: 6px !important;
   width: 200px !important;
-  height: 30px;
+  height: 25px !important;
   border-radius: 0.3rem !important;
   color: ${(props) => props.inputColor || "palevioletred"};
   background: #fff !important;
@@ -110,10 +111,10 @@ const PictureBox = styled.div`
 `;
 
 const ContentContainer = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  width: 180px;
   &:not(:last-of-type) {
     margin-right: 8%;
   }
@@ -123,47 +124,11 @@ const ContentContainer = styled.div`
   }
 `;
 
-const users = [
-  { name: 'Name 1', gender: 'female', email: 'a@a.com', language: 'English', phone: '435-455-6789', rating: '5' },
-  { name: 'Name 2', gender: 'male', email: 'a@a.com', language: 'English', phone: '435-455-6789', rating: '4.3' },
-  { name: 'Name 3', gender: 'male', email: 'a@a.com', language: 'English', phone: '435-455-6789', rating: '4.9' },
-];
-
-
-
-function InstructorTable() {
-
-  return (
-    <TableContainer component={Paper}>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Gender</th>
-            <th>Email</th>
-            <th>Language</th>
-            <th>Phone <FontAwesomeIcon icon={faPhoneAlt}/></th>
-            <th>Rating <FontAwesomeIcon icon={faStar} /></th>
-            <th>Details</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user, idx) => (
-            <tr>
-              <td key={{ idx }}>{user.name}</td>
-              <td key={{ idx }}>{user.gender}</td>
-              <td key={{ idx }}>{user.email}</td>
-              <td key={{ idx }}>{user.language}</td>
-              <td key={{ idx }}>{user.phone}</td>
-              <td key={{ idx }}>{user.rating}</td>
-              <td key={{ idx }}><FontAwesomeIcon icon={faEye} /></td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </TableContainer>
-  );
-}
+const selectInstructor = styled(Select)`
+    position: relative;
+    box-sizing: border-box;
+    width: 100px;
+`;
 
 // function CustomizedRating() {
 //   console.log('aaaaaaaaaaaaaaaaaa' + value)
@@ -190,14 +155,64 @@ class FormSearchInstructor extends Component {
       gender: "",
       language: "",
       rate: "",
-      errors: {}
+      errors: {},
+      items: [],
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.httpItems = this.httpItems.bind(this);
+    
+  }
+
+  componentDidMount(){
+    this.httpItems();
+  }
+
+  httpItems(){
+    axios.get("/api/users/instructors")
+    .then(res => {
+      if(res.status === 200){
+        this.setState({items: res.data});
+      }
+    }) 
+    .catch(err =>{}
+    );
   }
 
   handleChange(evt) {
     this.setState({ [evt.target.name]: evt.target.value });
+  }
+
+  instructorTable(users) {
+
+    return (
+      <TableContainer component={Paper}>
+      <Table aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Name</TableCell>
+            <TableCell>Gender</TableCell>
+            <TableCell>Phone</TableCell>
+            <TableCell>Email</TableCell>
+            <TableCell>Rating</TableCell>
+            <TableCell>Details</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {users.map((user) => (
+            <TableRow key={user.first_name}>
+              <TableCell>{user.first_name+" "+user.last_name}</TableCell>
+              <TableCell>{user.gender}</TableCell>
+              <TableCell>{user.phone}</TableCell>
+              <TableCell>{user.email}</TableCell>
+              <TableCell><Rating value={5} readOnly /></TableCell>
+              <TableCell><VisibilityIcon/></TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+    );
   }
 
   handleSubmit(evt) {
@@ -222,7 +237,7 @@ class FormSearchInstructor extends Component {
                 onChange={this.handleChange}
               />
             </ContentContainer>
-            <Marginer direction="horizontal" margin="8em" />
+            <Marginer direction="horizontal" margin="1em" />
             <ContentContainer>
               <Label>Gender</Label>
               <Select
@@ -231,6 +246,7 @@ class FormSearchInstructor extends Component {
                 id="gender"
                 type="text"
                 placeholder="Gender"
+                isSearchable={false}
                 clearable={false}
                 options={[
                   { value: 'Male', label: 'Male' },
@@ -242,7 +258,7 @@ class FormSearchInstructor extends Component {
                 })}
               />
             </ContentContainer>
-            <Marginer direction="horizontal" margin="8em" />
+            <Marginer direction="horizontal" margin="1em" />
             <ContentContainer>
               <Label>Language</Label>
               <Select
@@ -251,6 +267,7 @@ class FormSearchInstructor extends Component {
                 id="language"
                 type="text"
                 placeholder="Language"
+                isSearchable={false}
                 clearable={false}
                 options={[
                   { value: '1', label: 'English' },
@@ -262,7 +279,7 @@ class FormSearchInstructor extends Component {
                 })}
               />
             </ContentContainer>
-            <Marginer direction="horizontal" margin="8em" />
+            <Marginer direction="horizontal" margin="1em" />
             <ContentContainer>
               <Label>Rate</Label>
               <Select
@@ -271,6 +288,7 @@ class FormSearchInstructor extends Component {
                 id="rate"
                 type="text"
                 placeholder="Rate"
+                isSearchable={false}
                 clearable={false}
                 options={[
                   { value: '1', label: 'Above 1' },
@@ -284,7 +302,7 @@ class FormSearchInstructor extends Component {
                 })}
               />
             </ContentContainer>
-            <Marginer direction="horizontal" margin="8em" />
+            <Marginer direction="horizontal" margin="1em" />
             <ContentContainer>
               <Marginer direction="vertical" margin="2.5em" />
               <SubmitButton>Search</SubmitButton>
@@ -295,11 +313,12 @@ class FormSearchInstructor extends Component {
           <TableContainer>
             <br></br>
             <br></br>
-            {InstructorTable()}
+            {this.instructorTable(this.state.items)}
           </TableContainer>
         </BoxContainer>
       </div>
     );
   }
 }
+
 export default FormSearchInstructor;

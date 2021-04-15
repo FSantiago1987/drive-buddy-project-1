@@ -17,7 +17,6 @@ const InstructorAdContainer = styled.div`
 
     @media screen and (max-width: ${deviceSize.mobile}px) {
         height: 400px;
-        border-radius: 3%;
     }
 `;
 
@@ -35,7 +34,7 @@ const ContentContainer = styled.div`
 const SloganContainer = styled.div`
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     justify-content: flex-start;
     margin-right: 12em;
 
@@ -45,11 +44,12 @@ const SloganContainer = styled.div`
     }
 `;
 
-const Slogan = styled.h2`
+const Slogan = styled.h3`
+    font-family: Noto Sans SC;
+    font-weight: 100;
     margin: 0;
-    font-size: 24px;
+    font-size: 22px;
     color: #fff;
-    font-weight: 570;
     line-height: 1.3;
     text-align: start;
 
@@ -86,14 +86,14 @@ export function InstructorAd(props){
     return <InstructorAdContainer>
         <ContentContainer>
             <SloganContainer>
-                <BrandLogo logoSize={isMobile ? 25 : 42} textSize={isMobile ? 20 : 40} doNotUseGradient />
+                <BrandLogo logoSize={isMobile ? 25 : 42} textSize={isMobile ? 20 : 40} hideLogo beGradient />
                 <Marginer direction="vertical" margin="1em" />
                 <Slogan>You're a Driving Instructor,</Slogan>
                 <Slogan>and you have an outstanding</Slogan>
                 <Slogan>service to offer?</Slogan>
                 <Marginer direction="vertical" margin={10} />
                 <AchorLink href="/customer/access/signup">
-                    <Button size={isMobile ? 12 : 16}>Join as Instructor</Button>
+                    <Button>Join as Instructor</Button>
                 </AchorLink>
             </SloganContainer>
             <StandoutImage>

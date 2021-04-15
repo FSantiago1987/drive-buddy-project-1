@@ -2,10 +2,16 @@ import styled from "styled-components";
 import { Marginer } from "../marginer";
 import { deviceSize } from "../responsive";
 import { Component } from "react";
+import axios from "axios";
 import TableContainer from '@material-ui/core/TableContainer';
 import Paper from '@material-ui/core/Paper';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import Rating from '@material-ui/lab/Rating';
 
 const BoxContainer = styled.div`
   width: 100%;
@@ -114,39 +120,6 @@ const ContentContainer = styled.div`
   }
 `;
 
-const users = [
-  { name: 'Name 1', date: '01/01/1900', rating: '5', comments: 'comment 1' },
-  { name: 'Name 2', date: '01/01/1900', rating: '5', comments: 'comment 2' },
-  { name: 'Name 3', date: '01/01/1900', rating: '5', comments: 'comment 3' },
-];
-
-function RatingTable() {
-
-  return (
-    <TableContainer component={Paper}>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Date</th>
-            <th>Rating <FontAwesomeIcon icon={faStar} /></th>
-            <th>Comments</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user, idx) => (
-            <tr>
-              <td key={{ idx }}>{user.name}</td>
-              <td key={{ idx }}>{user.date}</td>
-              <td key={{ idx }}>{user.rating}</td>
-              <td key={{ idx }}>{user.comments}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </TableContainer>
-  );
-}
 
 class FormRateInstructor extends Component {
   constructor(props) {
@@ -154,13 +127,59 @@ class FormRateInstructor extends Component {
     this.state = {
       name: "",
       date: "",
+      items: [],
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.httpItems = this.httpItems.bind(this);
+    
+  }
+
+  componentDidMount(){
+    this.httpItems();
+  }
+
+  httpItems(){
+    axios.get("/api/users/instructors")
+    .then(res => {
+      if(res.status === 200){
+        this.setState({items: res.data});
+      }
+    }) 
+    .catch(err =>{}
+    );
   }
 
   handleChange(evt) {
     this.setState({ [evt.target.name]: evt.target.value });
+  }
+
+  RatingTable(users) {
+
+    return (
+      <TableContainer component={Paper}>
+      <Table aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Name</TableCell>
+            <TableCell>Date</TableCell>
+            <TableCell>Rating</TableCell>
+            <TableCell>Comments</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {users.map((user) => (
+            <TableRow key={user.first_name}>
+              <TableCell>{user.first_name+" "+user.last_name}</TableCell>
+              <TableCell>{user.dateOfBirth}</TableCell>
+              <TableCell><Rating value={5} readOnly /></TableCell>
+              <TableCell>{user.service_description}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+    );
   }
 
   handleSubmit(evt) {
@@ -208,7 +227,7 @@ class FormRateInstructor extends Component {
           <TableContainer>
             <br></br>
             <br></br>
-            {RatingTable()}
+            {this.RatingTable(this.state.items)}
           </TableContainer>
         </BoxContainer>
       </div>

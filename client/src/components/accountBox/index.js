@@ -4,9 +4,28 @@ import LoginForm  from './loginForm';
 import { motion } from "framer-motion";
 import { AccountContext } from './accountContext';
 import RegisterForm  from './registerForm';
+import TopProfileBackgroundImg from '../../images/backRegister.jpg'
+
+const TopSectionContainer = styled.div`
+    font-family: Noto Sans SC;
+    font-weight: 100;
+    width: 100%;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%,rgba(0,0,0,0.3) 100%), url(${TopProfileBackgroundImg}) no-repeat;
+    background-position: 0px 0px;
+    background-size: cover;
+`;
+
+const BackgroundFilter = styled.div`
+   width: 100%;
+   height: 100%;
+   background-color: rgba(38, 70, 83, 0.8);
+   display: flex; 
+   flex-direction: column;
+   align-items: center;
+`;
 
 const BoxContainer = styled.div`
-    width: 280px;
+    width: 350px;
     min-height: 550px;
     display: flex;
     flex-direction: column;
@@ -50,24 +69,27 @@ const HeaderContainer = styled.div`
 `;
 
 const HeaderText = styled.h2`
+    font-family: Noto Sans SC;
+    font-weight: 100;
     font-size: 30px;
     font-weight: 600;
     line-height: 1.24;
     align-items: flex-start;
     color: #fff;
     z-index: 10;
-    font-family: 'Poppins', cursive;
     margin: 0;
 `;
 
 const SmallText = styled.h5`
+    font-family: Noto Sans SC;
+    font-weight: 100;
     color: #fff;
     font-weight: 500;
     font-size: 11px;
     z-index: 10;
     margin: 0;
-    margin-top: 8px;
-    font-family: 'Poppins', cursive;
+    margin-top: 20px;
+    margin-bottom: 40px;
 `;
 
 const InnerContainer = styled.div`
@@ -75,7 +97,8 @@ const InnerContainer = styled.div`
     display: flex;
     flex-direction: column;
     padding: 01.8em;
-`;
+`;//padding-left: 40px;
+//padding-right: 40px;
 
 const backDropVariants = {
     expanded: {
@@ -129,35 +152,39 @@ export function AccountBox(props){
     const contextValue = {switchToSignup, switchToSignin};
 
     return (
-        <AccountContext.Provider value={contextValue}>
-            <BoxContainer>
-                <TopContainer>
-                    <BackDrop 
-                        initial={false} 
-                        animate={isExpanded ? "expanded" : "collapsed" } 
-                        variants={backDropVariants} 
-                        transition={expandingTransition}
-                    />
-                    {active === "signin" && 
-                        <HeaderContainer>
-                            <HeaderText>Welcome</HeaderText>
-                            <HeaderText>Back</HeaderText>
-                            <SmallText>Please sign-in to continue!</SmallText>
-                        </HeaderContainer>                   
-                    }
-                    {active === "signup" && 
-                        <HeaderContainer>
-                            <HeaderText>Create</HeaderText>
-                            <HeaderText>Account</HeaderText>
-                            <SmallText>Please sign-up to continue!</SmallText>
-                        </HeaderContainer>                   
-                    }                    
-                </TopContainer>
-                <InnerContainer>
-                    {active === "signin" && <LoginForm />}
-                    {active === "signup" && <RegisterForm />}
-                </InnerContainer>
-            </BoxContainer>
-    </AccountContext.Provider>
+        <TopSectionContainer>
+            <BackgroundFilter>
+                <AccountContext.Provider value={contextValue}>
+                    <BoxContainer>
+                        <TopContainer>
+                            <BackDrop 
+                                initial={false} 
+                                animate={isExpanded ? "expanded" : "collapsed" } 
+                                variants={backDropVariants} 
+                                transition={expandingTransition}
+                            />
+                            {active === "signin" && 
+                                <HeaderContainer>
+                                    <HeaderText>Welcome</HeaderText>
+                                    <HeaderText>Back</HeaderText>
+                                    <SmallText>Please sign-in to continue!</SmallText>
+                                </HeaderContainer>                   
+                            }
+                            {active === "signup" && 
+                                <HeaderContainer>
+                                    <HeaderText>Create</HeaderText>
+                                    <HeaderText>Account</HeaderText>
+                                    <SmallText>Please sign-up to continue!</SmallText>
+                                </HeaderContainer>                   
+                            }                    
+                        </TopContainer>
+                        <InnerContainer>
+                            {active === "signin" && <LoginForm />}
+                            {active === "signup" && <RegisterForm />}
+                        </InnerContainer>
+                    </BoxContainer>
+            </AccountContext.Provider>
+        </BackgroundFilter>
+    </TopSectionContainer>
     )
 }

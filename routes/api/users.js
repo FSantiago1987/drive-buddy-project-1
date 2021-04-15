@@ -9,6 +9,15 @@ const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
 // Load User model
 const User = require("../../models/User");
+
+// Fetch all users
+router.get("/", (req,res) => {
+  User.find().then(users => {
+    if (users) {
+      return res.send(users);
+    }
+  });
+});
 // Fetch instructors
 router.get("/instructors", (req,res) => {
   User.find({ user_type: 'instructor' }).then(users => {

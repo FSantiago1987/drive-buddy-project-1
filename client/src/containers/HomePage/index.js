@@ -9,7 +9,6 @@ import { deviceSize } from '../../components/responsive'
 import { Instructors } from './instructors'
 import { TopSection } from './topSection'
 
-
 const ContentContainer = styled.div`
     width: 100%;
     max-width:${deviceSize.laptop}px;
@@ -29,14 +28,11 @@ export function Homepage(props){
         <TopSection>
             <Navbar useTransparent />
         </TopSection>
-        <Marginer direction="vertical" margin="2em" />
         <InnerPageContainer>
-            <ContentContainer>
+             <ContentContainer>
                 <Instructors />
             </ContentContainer>
-            <Marginer direction="vertical" margin="5em" />
             <InstructorAd />
-            <Marginer direction="vertical" margin="5em" />
         </InnerPageContainer>
         <Footer />
     </PageContainer>

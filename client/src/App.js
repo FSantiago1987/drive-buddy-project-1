@@ -46,7 +46,7 @@ function App() {
                 <Route exact path="/" component={Homepage} />
                 <Route path="/customer/access/:action" exact component={CustomerAccessPage} />
                 <PrivateRoute path="/profile" exact component={Profile} />
-                <PrivateRoute path="/search_instructor" exact component={SearchInstructor} />
+                <Route path="/search_instructor" exact component={SearchInstructor} />
                 <PrivateRoute path="/rate_instructor" exact component={RateInstructor} />
                 <PrivateRoute path="/users_list" exact component={UsersList} />
                 {/* <Route exact path="/register" component={Register} />

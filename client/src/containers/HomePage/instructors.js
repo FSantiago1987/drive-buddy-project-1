@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { Button } from '../../components/button';
 import { InstructorCard } from '../../components/instructorsCard';
 import { deviceSize } from '../../components/responsive';
+import instructorData from '../../data/data.js';
 
 const InstructorContainer = styled.div`
     width: 100%;
@@ -13,7 +14,8 @@ const InstructorContainer = styled.div`
 `;
 
 const Title = styled.h1`
-    font-weight: 900;
+    font-weight: 800;
+    font-size: 2.5rem;
     color: #000;
 
     @media screen and (max-width: ${deviceSize.mobile}px) {
@@ -51,7 +53,21 @@ const ViewMoreButton = styled(Button)`
     }
 `;
 
+const AchorLink = styled.a`
+    font-size: 12px;
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+    outline: none;
+    transition: all 200ms ease-in-out;
+
+    &:hover {
+        filter: contrast(0.6);
+    }
+`;
+
 const wait = (num) => new Promise((rs) => setTimeout(rs, num));
+
 
 
 export function Instructors(props){
@@ -63,13 +79,9 @@ export function Instructors(props){
 
     const FetchInstructors = async () => {
         setLoading(true);
-        const response = await axios.get("http://localhost:5000/api/users/instructors").catch((err) => {
-            console.log("Error: ", err);
+        instructorData.forEach(instructor => {
+            setMostUsedInstructors(instructor);
         });
-        if(response.data) {
-            setMostUsedInstructors(response.data);
-        }
-
         setLoading(false);
     }
 
@@ -77,6 +89,19 @@ export function Instructors(props){
         FetchInstructors();
       }, []);
 
+    let instructors = instructorData.map((instructor, index) => {
+                return <InstructorCard  
+                    id={instructor.id} 
+                    title={instructor.title} 
+                    rating={instructor.rating} 
+                    rate={instructor.rate} 
+                    name={instructor.instructor.fullName} 
+                />
+        })
+    
+
+
+    
     return <InstructorContainer>
         <Title>Most Used Instructors</Title>
         <InstructorWrapper>
@@ -86,17 +111,14 @@ export function Instructors(props){
             {isLoading && (
                 <WarningText>Loading...</WarningText>
             )}
-            {!isMostUsedInstructorsEmpty && 
-            !isLoading && 
-            mostUsedInstructors.map(
-                (instructor, idx) => (
-                    <InstructorCard key={idx} {...instructor} />
-                ))}
+            {!isMostUsedInstructorsEmpty && !isLoading && instructors}
         </InstructorWrapper>
         <BottomContainer>
             {!isMostUsedInstructorsEmpty && 
             !isLoading && (
-                <ViewMoreButton>View More</ViewMoreButton>
+                <AchorLink href="/search_instructor">
+                    <ViewMoreButton>View More</ViewMoreButton>
+                </AchorLink>
             )}
         </BottomContainer>
     </InstructorContainer>
