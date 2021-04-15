@@ -15,8 +15,6 @@ import SearchInstructor from './containers/SearchInstructor';
 import RateInstructor from './containers/RateInstructor';
 import UsersList from './containers/UsersList';
 
-// Pull test
-
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
   // Set auth token header auth
@@ -49,8 +47,6 @@ function App() {
                 <Route path="/search_instructor" exact component={SearchInstructor} />
                 <PrivateRoute path="/rate_instructor" exact component={RateInstructor} />
                 <PrivateRoute path="/users_list" exact component={UsersList} />
-                {/* <Route exact path="/register" component={Register} />
-                <Route exact path="/login" component={Login} /> */}
               </Switch>
             </Router>
           </div>

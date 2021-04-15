@@ -9,8 +9,9 @@ const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
 // Load User model
 const User = require("../../models/User");
-
-// Fetch all users
+// @route GET api/users/
+// @desc Get users
+// @access Public
 router.get("/", (req,res) => {
   User.find().then(users => {
     if (users) {
@@ -18,7 +19,9 @@ router.get("/", (req,res) => {
     }
   });
 });
-// Fetch instructors
+// @route GET api/users/instructors
+// @desc Get user instructors
+// @access Public
 router.get("/instructors", (req,res) => {
   User.find({ user_type: 'instructor' }).then(users => {
     if (users) {
@@ -26,6 +29,9 @@ router.get("/instructors", (req,res) => {
     }
   });
 });
+// @route PUT api/users/update
+// @desc Update user
+// @access Public
 router.put("/update", (req,res) => {
   let id = req.body._id;
   let payload = req.body;
@@ -44,6 +50,9 @@ router.put("/update", (req,res) => {
     }
   })
 });
+// @route POST api/users/delete
+// @desc Delete user
+// @access Public
 router.post("/delete", (req,res) => {
   let id = req.body._id;
   let payload = req.body;
@@ -109,7 +118,7 @@ router.post("/register", (req, res) => {
       }
     });
   });
-  // @route POST api/users/login
+// @route POST api/users/login
 // @desc Login user and return JWT token
 // @access Public
 router.post("/login", (req, res) => {
@@ -161,6 +170,8 @@ router.post("/login", (req, res) => {
   });
 
   // @route POST api/users/upload
+  // @desc Upload user
+  // @access Public
   const upload = multer();
   router.post("/upload", upload.single("image"), function(req, res){
     const img = req.file;

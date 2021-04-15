@@ -81,6 +81,7 @@ class RegisterForm extends Component {
           address: this.state.address,
           post_code: this.state.post_code,
           city: this.state.city,
+          dateOfBirth: this.state.dateOfBirth,
           province: this.state.province,
           user_type: this.state.user_type
       };
@@ -212,6 +213,33 @@ class RegisterForm extends Component {
                     invalid: errors.post_code
                   })}
             /> 
+            <Input
+              type="date"
+              onChange={this.onChange}
+              value={this.state.dateOfBirth}
+              error={errors.dateOfBirth}
+              id="dateOfBirth"
+              placeholder="Date of birth" 
+              className={classnames("", {
+                invalid: errors.dateOfBirth
+              })}
+            />
+            <Select 
+              onChange={(e)=>{this.setState({gender: e.value})}}
+              error={errors.gender}
+              id="gender"
+              type="text"
+              placeholder="Gender" 
+              clearable={false}
+              options={[
+                { value: 'Male', label: 'Male' },
+                { value: 'Female', label: 'Female' },
+                { value: 'Rather not say', label: 'Rather not say' },
+              ]}
+              className={classnames("", {
+                invalid: errors.gender
+              })}
+            />
             <Select 
                   onChange={(e)=>{this.setState({user_type: e.value})}}
                   error={errors.user_type}
@@ -227,35 +255,10 @@ class RegisterForm extends Component {
                     invalid: errors.user_type
                   })}
              /> 
+             
              {this.state.user_type === "instructor" ? 
              [
-             <Select 
-              onChange={(e)=>{this.setState({gender: e.value})}}
-              error={errors.gender}
-              id="gender"
-              type="text"
-              placeholder="Gender" 
-              clearable={false}
-              options={[
-                { value: 'Male', label: 'Male' },
-                { value: 'Female', label: 'Female' },
-                { value: 'Rather not say', label: 'Rather not say' },
-              ]}
-              className={classnames("", {
-                invalid: errors.gender
-              })}
-            /> ,
-            <Input
-              type="date"
-              onChange={this.onChange}
-              value={this.state.dateOfBirth}
-              error={errors.dateOfBirth}
-              id="dateOfBirth"
-              placeholder="Date of birth" 
-              className={classnames("", {
-                invalid: errors.dateOfBirth
-              })}
-            />,
+             
             <Input 
               onChange={this.onChange}
               value={this.state.service_description}

@@ -13,6 +13,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import Rating from '@material-ui/lab/Rating';
+import Button from '@material-ui/core/Button';
 import "./stylesSearch.css"
 import axios from "axios";
 
@@ -130,23 +131,6 @@ const selectInstructor = styled(Select)`
     width: 100px;
 `;
 
-// function CustomizedRating() {
-//   console.log('aaaaaaaaaaaaaaaaaa' + value)
-//   const [value, setValue] = React.useState(2);
-//   return (
-//     <Box component="fieldset" mb={3} borderColor="transparent">
-//       <Typography component="legend">Controlled</Typography>
-//       <Rating
-//         name="simple-controlled"
-//         value={value}
-//         onChange={(event, newValue) => {
-//           setValue(newValue);
-//         }}
-//       />
-//     </Box>
-//   );
-// }
-
 class FormSearchInstructor extends Component {
   constructor(props) {
     super(props);
@@ -196,6 +180,7 @@ class FormSearchInstructor extends Component {
             <TableCell>Email</TableCell>
             <TableCell>Rating</TableCell>
             <TableCell>Details</TableCell>
+            <TableCell>Book Instructor</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -207,6 +192,9 @@ class FormSearchInstructor extends Component {
               <TableCell>{user.email}</TableCell>
               <TableCell><Rating value={5} readOnly /></TableCell>
               <TableCell><VisibilityIcon/></TableCell>
+              <Button style={{marginTop:'10px'}} variant="contained" color="primary">
+                Book
+              </Button>
             </TableRow>
           ))}
         </TableBody>
