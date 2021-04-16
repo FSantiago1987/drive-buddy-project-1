@@ -3,12 +3,69 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const keys = require("../../config/keys");
+const multer = require("multer");
 // Load input validation
 const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
 // Load User model
 const User = require("../../models/User");
-
+// @route GET api/users/
+// @desc Get users
+// @access Public
+router.get("/", (req,res) => {
+  User.find().then(users => {
+    if (users) {
+      return res.send(users);
+    }
+  });
+});
+// @route GET api/users/instructors
+// @desc Get user instructors
+// @access Public
+router.get("/instructors", (req,res) => {
+  User.find({ user_type: 'instructor' }).then(users => {
+    if (users) {
+      return res.send(users);
+    }
+  });
+});
+// @route PUT api/users/update
+// @desc Update user
+// @access Public
+router.put("/update", (req,res) => {
+  let id = req.body._id;
+  let payload = req.body;
+  delete payload._id;
+  User.findByIdAndUpdate({_id: id}, payload, function(err, result){
+    if(err){
+      res.send(err)
+    }
+    else{
+      User.findOne({ _id: result._id }).then(user => {
+        if (user) {
+          return res.send(user);
+        }
+      });
+        
+    }
+  })
+});
+// @route POST api/users/delete
+// @desc Delete user
+// @access Public
+router.post("/delete", (req,res) => {
+  let id = req.body._id;
+  let payload = req.body;
+  delete payload._id;
+  User.findByIdAndDelete({_id: id}, payload, function(err, result){
+    if(err){
+      res.send(err)
+    }
+    else{
+      return res.send(result);
+    }
+  })
+});
 // @route POST api/users/register
 // @desc Register user
 // @access Public
@@ -28,6 +85,9 @@ router.post("/register", (req, res) => {
             last_name: req.body.last_name,
             username: req.body.username,
             email: req.body.email,
+            dateOfBirth: req.body.dateOfBirth,
+            profilePicture: "https://www.vippng.com/png/detail/363-3631798_profile-placeholder-woman-720-profile-image-placeholder-png.png",
+            messages: [],
             password: req.body.password,
             phone: req.body.phone,
             address: req.body.address,
@@ -38,7 +98,10 @@ router.post("/register", (req, res) => {
         };
         if(req.body.user_type == 'instructor'){
             parameters.feedback = [];
-            parameters.service_description = 'I offer...';
+            parameters.languages = req.body.languages || [];
+            parameters.documents = req.body.documents || [];
+            parameters.gender = req.body.gender || "Rather not say";
+            parameters.service_description = req.body.service_description || "I offer...";
         }
         const newUser = new User(parameters);
   // Hash password before saving in database
@@ -55,7 +118,7 @@ router.post("/register", (req, res) => {
       }
     });
   });
-  // @route POST api/users/login
+// @route POST api/users/login
 // @desc Login user and return JWT token
 // @access Public
 router.post("/login", (req, res) => {
@@ -105,5 +168,27 @@ router.post("/login", (req, res) => {
       });
     });
   });
+
+  // @route POST api/users/upload
+  // @desc Upload user
+  // @access Public
+  const upload = multer();
+  router.post("/upload", upload.single("image"), function(req, res){
+    const img = req.file;
+    const _id = req.body._id;
+    User.findByIdAndUpdate({_id: _id}, {profilePicture: img}, function(err, result){
+      if(err){
+        res.send(err)
+      }
+      else{
+        User.findOne({ _id: result._id }).then(user => {
+          if (user) {
+            return res.send(user);
+          }
+        });
+          
+      }
+    })
+  })
 
   module.exports = router;
