@@ -1,0 +1,33 @@
+{
+  "files": {
+    "main.css": "/static/css/main.e0ab2df2.chunk.css",
+    "main.js": "/static/js/main.d474caf7.chunk.js",
+    "main.js.map": "/static/js/main.d474caf7.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.6a7d90a1.js",
+    "runtime-main.js.map": "/static/js/runtime-main.6a7d90a1.js.map",
+    "static/js/2.6b4f45c4.chunk.js": "/static/js/2.6b4f45c4.chunk.js",
+    "static/js/2.6b4f45c4.chunk.js.map": "/static/js/2.6b4f45c4.chunk.js.map",
+    "static/js/3.5491335e.chunk.js": "/static/js/3.5491335e.chunk.js",
+    "static/js/3.5491335e.chunk.js.map": "/static/js/3.5491335e.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/main.e0ab2df2.chunk.css.map": "/static/css/main.e0ab2df2.chunk.css.map",
+    "static/js/2.6b4f45c4.chunk.js.LICENSE.txt": "/static/js/2.6b4f45c4.chunk.js.LICENSE.txt",
+    "static/media/backRegister.2c9fde0c.jpg": "/static/media/backRegister.2c9fde0c.jpg",
+    "static/media/best-driver.dfe66f8a.png": "/static/media/best-driver.dfe66f8a.png",
+    "static/media/car.9a6a1ab2.jpg": "/static/media/car.9a6a1ab2.jpg",
+    "static/media/driveBuddy.205b15ea.png": "/static/media/driveBuddy.205b15ea.png",
+    "static/media/driver2.58414540.jpg": "/static/media/driver2.58414540.jpg",
+    "static/media/instructorAd.9085daa8.png": "/static/media/instructorAd.9085daa8.png",
+    "static/media/landing-page.06f7e3ed.jpg": "/static/media/landing-page.06f7e3ed.jpg",
+    "static/media/logoDriveBuddy.3dcd5e31.png": "/static/media/logoDriveBuddy.3dcd5e31.png",
+    "static/media/phoebe.2ad11f3e.jpg": "/static/media/phoebe.2ad11f3e.jpg",
+    "static/media/teddriver.699aab1d.jpg": "/static/media/teddriver.699aab1d.jpg",
+    "static/media/toretto.6d9ed8ad.jpg": "/static/media/toretto.6d9ed8ad.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.6a7d90a1.js",
+    "static/js/2.6b4f45c4.chunk.js",
+    "static/css/main.e0ab2df2.chunk.css",
+    "static/js/main.d474caf7.chunk.js"
+  ]
+}
